@@ -65,7 +65,7 @@ export default function Header({ children, position, routes }) {
             onClick={toggleDrawer}
             selected={`/${location}` === routes[route].path}
           >
-            <ListItemIcon>{routes[route].icon()}</ListItemIcon>
+            <ListItemIcon>{routes[route].icon}</ListItemIcon>
             <ListItemText primary={routes[route].name} />
           </ListItem>
         );

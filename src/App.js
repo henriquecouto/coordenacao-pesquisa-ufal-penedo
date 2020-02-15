@@ -3,43 +3,49 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { Home as HomeIcon } from "@material-ui/icons";
 import Header from "./components/Header";
+import Home from "./screens/Home";
+import ResearcherArea from "./screens/ResearcherArea";
+import Pibic from "./screens/Pibic";
+import ResearchGroups from "./screens/ResearchGroup";
+import Postgraduate from "./screens/Postgraduate";
+import Coordination from "./screens/Coordination";
 
 const routes = [
   {
-    render: <Typography variant="h1">Início</Typography>,
+    render: <Home />,
     path: "/",
     name: "Início",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   },
   {
-    render: <Typography variant="h1">Área do Pesquisador</Typography>,
+    render: <ResearcherArea />,
     path: "/area-do-pesquisador",
     name: "Área do Pesquisador",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   },
   {
-    render: <Typography variant="h1">PIBIC</Typography>,
+    render: <Pibic />,
     path: "/pibic",
     name: "PIBIC",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   },
   {
-    render: <Typography variant="h1">Grupod de Pesquisa</Typography>,
+    render: <ResearchGroups />,
     path: "/grupos-de-pesquisa",
     name: "Grupos de Pesquisa",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   },
   {
-    render: <Typography variant="h1">Pós Graduação</Typography>,
+    render: <Postgraduate />,
     path: "/pos-graduacao",
     name: "Pós Graduação",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   },
   {
-    render: <Typography variant="h1">Coordenação</Typography>,
+    render: <Coordination />,
     path: "/coordenacao",
     name: "Coordenação",
-    icon: () => <HomeIcon />
+    icon: <HomeIcon />
   }
 ];
 
