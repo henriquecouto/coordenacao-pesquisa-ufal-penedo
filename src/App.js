@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Typography } from "@material-ui/core";
-import { Home as HomeIcon } from "@material-ui/icons";
+import {
+  Home as HomeIcon,
+  LocalLibrary as ResearcherAreaIcon,
+  FindInPage as PibicIcon,
+  GroupWork as ReseachGroupsIcon,
+  School as PostgraduateIcon,
+  AssignmentInd as CoordinationIcon
+} from "@material-ui/icons";
 import Header from "./components/Header";
 import Home from "./screens/Home";
 import ResearcherArea from "./screens/ResearcherArea";
@@ -21,31 +27,31 @@ const routes = [
     render: <ResearcherArea />,
     path: "/area-do-pesquisador",
     name: "Área do Pesquisador",
-    icon: <HomeIcon />
+    icon: <ResearcherAreaIcon />
   },
   {
     render: <Pibic />,
     path: "/pibic",
     name: "PIBIC",
-    icon: <HomeIcon />
+    icon: <PibicIcon />
   },
   {
     render: <ResearchGroups />,
     path: "/grupos-de-pesquisa",
     name: "Grupos de Pesquisa",
-    icon: <HomeIcon />
+    icon: <ReseachGroupsIcon />
   },
   {
     render: <Postgraduate />,
     path: "/pos-graduacao",
     name: "Pós Graduação",
-    icon: <HomeIcon />
+    icon: <PostgraduateIcon />
   },
   {
     render: <Coordination />,
     path: "/coordenacao",
     name: "Coordenação",
-    icon: <HomeIcon />
+    icon: <CoordinationIcon />
   }
 ];
 
