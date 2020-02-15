@@ -48,7 +48,6 @@ export default function Header({ children, position, routes }) {
   const location = window.location.pathname.split("/")[1];
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const toggleDrawer = () => {
     setDrawer(v => !v);
@@ -73,10 +72,6 @@ export default function Header({ children, position, routes }) {
       })}
     </List>
   );
-
-  if (redirect) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div className={classes.root}>
