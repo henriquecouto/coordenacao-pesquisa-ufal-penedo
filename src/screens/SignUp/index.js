@@ -10,7 +10,11 @@ import {
   Grid,
   TextField,
   Button,
-  Link
+  Link,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import { Link as Redirect, useHistory } from "react-router-dom";
 
@@ -35,6 +39,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignUp() {
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
   const history = useHistory();
 
   const classes = useStyles();
@@ -43,7 +52,10 @@ export default function SignUp() {
     email: "",
     password: "",
     fullName: "",
-    username: ""
+    siape: "",
+    knowledgearea: "",
+    lattes: "",
+    specialization: ""
   });
   const [error, setError] = useState({ status: false, message: "" });
   const [redirect, setRedirect] = useState({ status: false });
@@ -61,6 +73,9 @@ export default function SignUp() {
     setForm(old => ({ ...old, [id]: value }));
   };
 
+  const onChangeSelect = ({ target: { name, value } }) => {
+    setForm(old => ({ ...old, [name]: value }));
+  };
   const make = async e => {
     e.preventDefault();
     const result = await signUp(form);
@@ -79,7 +94,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Faça seu cadastro no Gitfy
+          Faça seu cadastro
         </Typography>
         <form onSubmit={make} className={classes.form}>
           <TextField
@@ -99,13 +114,56 @@ export default function SignUp() {
             required
             fullWidth
             margin="normal"
-            id="username"
-            label="Nome de usuário"
-            name="username"
-            autoComplete="username"
+            id="knowledgearea"
+            label="Área de Conhecimento"
             onChange={onChange}
-            value={form.username}
+            value={form.knowledgearea}
           />
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            margin="normal"
+            id="siape"
+            label="Siape"
+            type="tel"
+            onChange={onChange}
+            value={form.siape}
+          />
+          <TextField
+            variant="outlined"
+            required
+            autoComplete="none"
+            fullWidth
+            margin="normal"
+            id="lattes"
+            label="Link do Lattes"
+            onChange={onChange}
+            value={form.lattes}
+          />
+          <FormControl
+            variant="outlined"
+            className={classes.formControl}
+            style={{ width: "100%", marginTop: 15, marginBottom: 10 }}
+          >
+            <InputLabel ref={inputLabel} id="input-specialization">
+              Titulação
+            </InputLabel>
+            <Select
+              labelWidth={labelWidth}
+              labelId="input-specialization"
+              name="specialization"
+              value={form.specialization}
+              onChange={onChangeSelect}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Doutor (a)"}>Doutor (a)</MenuItem>
+              <MenuItem value={"Mestre (a)"}>Mestre (a)</MenuItem>
+              <MenuItem value={"Especialista"}>Especialista</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             variant="outlined"
             required
