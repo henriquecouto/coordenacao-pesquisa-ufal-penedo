@@ -23,12 +23,6 @@ const routes = {
     name: "Início",
     icon: <HomeIcon />
   },
-  ResearcherArea: {
-    render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
-    path: "/area-do-pesquisador",
-    name: "Área do Pesquisador",
-    icon: <ResearcherAreaIcon />
-  },
   Pibic: {
     render: handlePosition => <Pibic setPosition={handlePosition} />,
     path: "/pibic",
@@ -52,6 +46,12 @@ const routes = {
     path: "/coordenacao",
     name: "Coordenação",
     icon: <CoordinationIcon />
+  },
+  ResearcherArea: {
+    render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
+    path: "/area-do-pesquisador",
+    name: "Área do Pesquisador",
+    icon: <ResearcherAreaIcon />
   }
 };
 
