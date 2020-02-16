@@ -20,3 +20,20 @@ const onSnapshot = (snapshot, next) => {
   const result = snapshot.docs.map(v => ({ id: v.id, ...v.data() }));
   return next(result);
 };
+
+export const loadSubsections = (callback, section) => {
+  const unsubscribe = db
+    .collection("subsections")
+    .orderBy("name", "asc")
+    .where("section", "==", section)
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadSections = callback => {
+  const unsubscribe = db
+    .collection("sections")
+    .orderBy("name", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
