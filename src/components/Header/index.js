@@ -45,7 +45,10 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    [theme.breakpoints.up("md")]: {
+      marginTop: 80
+    }
   },
   toolbar: theme.mixins.toolbar,
   title: {
@@ -57,8 +60,9 @@ const useStyles = makeStyles(theme => ({
   titleText: {
     textDecoration: "none",
     fontWeight: 300,
-    [theme.breakpoints.down("md")]: { ...theme.typography.h5, fontSize: 35 },
-    [theme.breakpoints.down("sm")]: { ...theme.typography.h6 }
+    fontSize: 40,
+    [theme.breakpoints.down("md")]: { fontSize: 35 },
+    [theme.breakpoints.down("sm")]: { fontSize: 20 }
   },
   gridTitle: { [theme.breakpoints.up("md")]: { marginTop: 20 } }
 }));
