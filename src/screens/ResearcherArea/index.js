@@ -12,13 +12,6 @@ import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 
 import { loadSections, loadSubsections } from "../../services/db";
-import Menu, { MenuItem } from "./Menu";
-
-const useStyles = makeStyles(theme => ({
-  menu: {
-    backgroundColor: theme.palette.background.paper
-  }
-}));
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
@@ -30,8 +23,6 @@ export default function ResearcherArea({ setPosition }) {
 
   const [subsections, setSubsections] = useState([]);
   const [selectedSubsection, setSelectedSubsection] = useState(undefined);
-
-  const classes = useStyles();
 
   const handleLogged = res => {
     setLogged(res);
@@ -90,27 +81,7 @@ export default function ResearcherArea({ setPosition }) {
       <Grid item style={{ marginBottom: 20 }}>
         <Typography variant="h4">Área do Pesquisador</Typography>
       </Grid>
-      <Grid container className={classes.menu}>
-        <Menu
-          sections={sections}
-          selectSection={setSelectedSection}
-          selectedSection={selectedSection}
-        >
-          <Grid container direction="column">
-            {subsections.map(v => {
-              return (
-                <MenuItem
-                  value={v.section}
-                  selected={selectedSection.id}
-                  key={v.id}
-                >
-                  <Grid item>{v.name}</Grid>
-                </MenuItem>
-              );
-            })}
-          </Grid>
-        </Menu>
-      </Grid>
+      <Grid container></Grid>
     </Grid>
   );
 }

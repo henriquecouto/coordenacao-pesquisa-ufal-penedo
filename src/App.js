@@ -20,7 +20,7 @@ const routes = {
   Home: {
     render: handlePosition => <Home setPosition={handlePosition} />,
     path: "/",
-    name: "Início",
+    name: "Página Inicial",
     icon: <HomeIcon />
   },
   Pibic: {

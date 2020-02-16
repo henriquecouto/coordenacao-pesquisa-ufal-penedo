@@ -31,11 +31,6 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
-  appBarGrid: {
-    [theme.breakpoints.down("sm")]: {
-      alignItems: "flex-start"
-    }
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
@@ -45,10 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3, 0),
-    [theme.breakpoints.up("md")]: {
-      marginTop: 80
-    }
+    padding: theme.spacing(3, 0)
   },
   toolbar: theme.mixins.toolbar,
   title: {
@@ -58,13 +50,8 @@ const useStyles = makeStyles(theme => ({
     textOverflow: "ellipsis"
   },
   titleText: {
-    textDecoration: "none",
-    fontWeight: 300,
-    fontSize: 40,
-    [theme.breakpoints.down("md")]: { fontSize: 35 },
-    [theme.breakpoints.down("sm")]: { fontSize: 20 }
-  },
-  gridTitle: { [theme.breakpoints.up("md")]: { marginTop: 20 } }
+    textDecoration: "none"
+  }
 }));
 
 export default function Header({ children, position, routes }) {
@@ -96,7 +83,7 @@ export default function Header({ children, position, routes }) {
   );
 
   const MenuListHeader = () => (
-    <Grid container style={{ margin: "20px 0" }}>
+    <Grid container justify="flex-end">
       {Object.keys(routes)
         .splice(1)
         .map(route => {
@@ -120,16 +107,10 @@ export default function Header({ children, position, routes }) {
       <CssBaseline />
       <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid
-            container
-            direction="column"
-            justify="space-between"
-            alignItems="center"
-            className={classes.appBarGrid}
-          >
-            <Grid item xs>
-              <Grid container alignItems="center" className={classes.gridTitle}>
-                <Hidden mdUp>
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item>
+              <Grid container alignItems="center">
+                <Hidden lgUp>
                   <Grid item>
                     <IconButton
                       className={classes.menuButton}
@@ -141,7 +122,7 @@ export default function Header({ children, position, routes }) {
                 </Hidden>
                 <Grid item xs className={classes.title}>
                   <Typography
-                    variant="h3"
+                    variant="h6"
                     color="textPrimary"
                     component={Link}
                     to="/"
@@ -152,8 +133,8 @@ export default function Header({ children, position, routes }) {
                 </Grid>
               </Grid>
             </Grid>
-            <Hidden smDown>
-              <Grid item xs>
+            <Hidden mdDown>
+              <Grid item>
                 <MenuListHeader />
               </Grid>
             </Hidden>
