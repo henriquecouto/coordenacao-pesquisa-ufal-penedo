@@ -64,7 +64,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Entrar no Gitfy
+          Entrar
         </Typography>
         <form onSubmit={make} className={classes.form}>
           <TextField
