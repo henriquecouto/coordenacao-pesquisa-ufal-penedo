@@ -8,15 +8,31 @@ import SignUp from "../SignUp";
 import SignIn from "../SignIn";
 import ForgotPass from "../ForgotPass";
 import { listenLogin } from "../../services/auth";
+import { CircularProgress, Grid } from "@material-ui/core";
 
 export default function ResearcherArea({ setPosition }) {
-  const [logged, setLogged] = useState({ status: false });
   const match = useRouteMatch();
+  const [logged, setLogged] = useState({ status: false });
+  const [loading, setLoading] = useState(false);
+
+  const handleLogged = res => {
+    setLogged(res);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    listenLogin(setLogged);
+    setLoading(true);
+    listenLogin(handleLogged);
     setPosition("ResearcherArea");
   }, [setPosition]);
+
+  if (loading) {
+    return (
+      <Grid container justify="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
 
   if (!logged.status) {
     return (
