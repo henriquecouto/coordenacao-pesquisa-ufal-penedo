@@ -5,7 +5,6 @@ import {
   IconButton,
   AppBar,
   Grid,
-  Drawer,
   List,
   ListItem,
   ListItemText,
@@ -17,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Menu as MenuIcon } from "@material-ui/icons";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 250;
 
@@ -39,8 +38,7 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3, 0)
+    flexGrow: 1
   },
   toolbar: theme.mixins.toolbar,
   title: {
@@ -92,7 +90,7 @@ export default function Header({ children, position, routes }) {
               <Button
                 component={Link}
                 to={routes[route].path}
-                variant={position === routes[route.name] ? "contained" : "text"}
+                color={position === routes[route].name ? "primary" : "default"}
               >
                 {routes[route].name}
               </Button>

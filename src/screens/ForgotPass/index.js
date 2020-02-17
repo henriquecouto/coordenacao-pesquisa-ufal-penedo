@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ForgotPass() {
+export default function ForgotPass({ setLoading }) {
   const history = useHistory();
   const classes = useStyles();
 
@@ -57,12 +57,14 @@ export default function ForgotPass() {
 
   const make = async e => {
     e.preventDefault();
+    setLoading(true);
     const result = await recoverPass(form.email);
     if (result.status) {
       console.log("recuperação");
     } else {
       setError({ status: true, message: result.error });
     }
+    setLoading(false);
   };
 
   return (

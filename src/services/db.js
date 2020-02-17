@@ -3,11 +3,10 @@ import { getLoggedUser } from "./auth";
 
 export const addData = async (collection, data) => {
   try {
-    const { displayName, uid } = getLoggedUser();
+    const { uid } = getLoggedUser();
     await db.collection(collection).add({
       ...data,
-      user: uid,
-      username: displayName,
+      uid: uid,
       registrationDate: new Date()
     });
     return { status: true };
@@ -21,11 +20,18 @@ const onSnapshot = (snapshot, next) => {
   return next(result);
 };
 
-export const loadSubsections = (callback, section) => {
+export const loadSubsections = callback => {
   const unsubscribe = db
     .collection("subsections")
-    .orderBy("name", "asc")
-    .where("section", "==", section)
+    .orderBy("priority", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadQuestions = callback => {
+  const unsubscribe = db
+    .collection("questions")
+    .orderBy("priority", "asc")
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
@@ -33,7 +39,7 @@ export const loadSubsections = (callback, section) => {
 export const loadSections = callback => {
   const unsubscribe = db
     .collection("sections")
-    .orderBy("name", "asc")
+    .orderBy("priority", "asc")
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
