@@ -10,14 +10,14 @@ const errors = {
   "auth/weak-password": "A senha precisa ter 6 ou mais caracteres"
 };
 
-export const signUp = async ({ email, password, username, fullName }) => {
+export const signUp = async ({ email, password, fullName, ...others }) => {
   try {
     await auth.createUserWithEmailAndPassword(email, password);
     const loggedUser = getLoggedUser();
     await loggedUser.updateProfile({
-      displayName: username
+      displayName: fullName
     });
-    await addData("users", { uid: loggedUser.uid, username, email, fullName });
+    await addData("users", { email, fullName, ...others });
     return { status: true };
   } catch (error) {
     console.log(error.code, error.message);
@@ -51,7 +51,7 @@ export const signOut = async () => {
 export const listenLogin = callback => {
   const unsubscribe = auth.onAuthStateChanged(user => {
     if (user) {
-      callback({ status: true });
+      callback({ status: true, uid: user.uid });
     } else {
       callback({ status: false });
     }

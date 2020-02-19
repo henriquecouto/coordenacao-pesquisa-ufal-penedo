@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+export default function SignUp({ setLoading }) {
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -78,12 +78,14 @@ export default function SignUp() {
   };
   const make = async e => {
     e.preventDefault();
+    setLoading(true);
     const result = await signUp(form);
     if (result.status) {
       setRedirect({ status: true });
     } else {
       setError({ status: true, message: result.error });
     }
+    setLoading(false);
   };
 
   return (

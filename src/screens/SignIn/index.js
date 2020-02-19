@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn() {
+export default function SignIn({ setLoading }) {
   const match = useRouteMatch();
 
   const classes = useStyles();
@@ -48,12 +48,13 @@ export default function SignIn() {
 
   const make = async e => {
     e.preventDefault();
+    setLoading(true);
     const result = await signIn(form.email, form.password);
     if (result.status) {
-      console.log("entrou");
     } else {
       setError({ status: true, message: result.error });
     }
+    setLoading(false);
   };
 
   return (

@@ -3,13 +3,27 @@ import { getLoggedUser } from "./auth";
 
 export const addData = async (collection, data) => {
   try {
-    const { displayName, uid } = getLoggedUser();
+    const { uid } = getLoggedUser();
     await db.collection(collection).add({
       ...data,
-      user: uid,
-      username: displayName,
+      uid: uid,
       registrationDate: new Date()
     });
+    return { status: true };
+  } catch (error) {
+    return { etatus: false, error };
+  }
+};
+
+export const updateData = async (collection, doc, data) => {
+  try {
+    await db
+      .collection(collection)
+      .doc(doc)
+      .update({
+        ...data,
+        lastModification: new Date()
+      });
     return { status: true };
   } catch (error) {
     return { etatus: false, error };
@@ -21,19 +35,44 @@ const onSnapshot = (snapshot, next) => {
   return next(result);
 };
 
-export const loadSubsections = (callback, section) => {
+export const loadResponses = async (callback, questionaryId) => {
+  const { uid } = getLoggedUser();
   const unsubscribe = db
-    .collection("subsections")
-    .orderBy("name", "asc")
-    .where("section", "==", section)
+    .collection("responses")
+    .where("uid", "==", uid)
+    .where("questionaryId", "==", questionaryId)
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
 
-export const loadSections = callback => {
+export const loadSubsections = callback => {
+  const unsubscribe = db
+    .collection("subsections")
+    .orderBy("priority", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadQuestions = callback => {
+  const unsubscribe = db
+    .collection("questions")
+    .orderBy("priority", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadSections = (callback, questionaryId) => {
   const unsubscribe = db
     .collection("sections")
-    .orderBy("name", "asc")
+    .where("questionary", "==", questionaryId)
+    .orderBy("priority", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadQuestionaries = callback => {
+  const unsubscribe = db
+    .collection("questionaries")
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
