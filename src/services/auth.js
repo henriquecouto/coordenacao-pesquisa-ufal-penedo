@@ -51,7 +51,7 @@ export const signOut = async () => {
 export const listenLogin = callback => {
   const unsubscribe = auth.onAuthStateChanged(user => {
     if (user) {
-      callback({ status: true });
+      callback({ status: true, uid: user.uid });
     } else {
       callback({ status: false });
     }

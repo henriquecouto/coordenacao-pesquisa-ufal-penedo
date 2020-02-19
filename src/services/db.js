@@ -15,9 +15,34 @@ export const addData = async (collection, data) => {
   }
 };
 
+export const updateData = async (collection, doc, data) => {
+  try {
+    await db
+      .collection(collection)
+      .doc(doc)
+      .update({
+        ...data,
+        lastModification: new Date()
+      });
+    return { status: true };
+  } catch (error) {
+    return { etatus: false, error };
+  }
+};
+
 const onSnapshot = (snapshot, next) => {
   const result = snapshot.docs.map(v => ({ id: v.id, ...v.data() }));
   return next(result);
+};
+
+export const loadResponses = async (callback, questionaryId) => {
+  const { uid } = getLoggedUser();
+  const unsubscribe = db
+    .collection("responses")
+    .where("uid", "==", uid)
+    .where("questionaryId", "==", questionaryId)
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
 };
 
 export const loadSubsections = callback => {
@@ -36,10 +61,18 @@ export const loadQuestions = callback => {
   return unsubscribe;
 };
 
-export const loadSections = callback => {
+export const loadSections = (callback, questionaryId) => {
   const unsubscribe = db
     .collection("sections")
+    .where("questionary", "==", questionaryId)
     .orderBy("priority", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadQuestionaries = callback => {
+  const unsubscribe = db
+    .collection("questionaries")
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };

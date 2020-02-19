@@ -51,7 +51,8 @@ const routes = {
     render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
     path: "/area-do-pesquisador",
     name: "Área do Pesquisador",
-    icon: <ResearcherAreaIcon />
+    icon: <ResearcherAreaIcon />,
+    notExact: true
   }
 };
 
@@ -67,7 +68,11 @@ function App() {
       <Header position={position} routes={routes}>
         {Object.keys(routes).map(route => {
           return (
-            <Route exact path={routes[route].path} key={routes[route].path}>
+            <Route
+              exact={!routes[route].notExact}
+              path={routes[route].path}
+              key={routes[route].path}
+            >
               {routes[route].render(handlePosition)}
             </Route>
           );
