@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 import { recoverPass, listenLogin } from "../../services/auth";
-import { Link as RouterLink, Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   Container,
   CssBaseline,

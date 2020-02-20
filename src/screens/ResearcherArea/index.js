@@ -19,7 +19,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 
 import { loadQuestionaries } from "../../services/db";
-import Questionary from "./Questionary";
+import Questionary from "../../components/Questionary";
 
 const useStyles = makeStyles(theme => ({
   div: {
