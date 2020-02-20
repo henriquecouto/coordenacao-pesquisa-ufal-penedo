@@ -20,13 +20,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { loadQuestionaries } from "../../services/db";
 import Questionary from "../../components/Questionary";
+import CustomCard from "../../components/CustomCard";
 
 const useStyles = makeStyles(theme => ({
-  div: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
   root: {
     maxWidth: 900,
     padding: theme.spacing(0, 2, 2, 2)
@@ -44,9 +40,7 @@ const useStyles = makeStyles(theme => ({
   paperQuestionary: {
     cursor: "pointer",
     width: "100%",
-    marginTop: theme.spacing(2),
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.background.paper
+    marginTop: theme.spacing(2)
   }
 }));
 
@@ -106,53 +100,49 @@ export default function ResearcherArea({ setPosition }) {
     return (
       <Router>
         <Route exact path={`${match.url}/`}>
-          <div className={classes.div}>
-            <Grid container className={classes.root} justify="center">
-              <Paper className={classes.paper}>
-                <Grid container justify="space-between">
-                  <Grid item className={classes.paperContent}>
-                    <Typography variant="h4">Área do Pesquisador</Typography>
-                    <Typography variant="subtitle1">
-                      Aqui você pode adicionar ou editar seus dados acadêmicos
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      className={classes.logout}
-                      color="primary"
-                      onClick={signOut}
-                    >
-                      Sair
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
+          <Grid container className={classes.root} justify="center">
+            <CustomCard
+              button={
+                <Button
+                  className={classes.logout}
+                  color="primary"
+                  onClick={signOut}
+                >
+                  Sair
+                </Button>
+              }
+            >
+              <Typography variant="h4">Área do Pesquisador</Typography>
+              <Typography variant="subtitle1">
+                Aqui você pode adicionar ou editar seus dados acadêmicos
+              </Typography>
+            </CustomCard>
+          </Grid>
 
-            <Grid container className={classes.root}>
-              {questionaries.map(v => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    key={v.id}
-                    component={Link}
-                    to={`${match.url}/questionary/${v.id}`}
-                    style={{
-                      textDecoration: "none"
-                    }}
+          <Grid container className={classes.root}>
+            {questionaries.map(v => {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  key={v.id}
+                  component={Link}
+                  to={`${match.url}/questionary/${v.id}`}
+                  style={{
+                    textDecoration: "none"
+                  }}
+                >
+                  <CustomCard
+                    variant="dark"
+                    className={classes.paperQuestionary}
                   >
-                    <Paper className={classes.paperQuestionary}>
-                      <div className={classes.paperContent}>
-                        <Typography variant="h4">{v.name}</Typography>
-                        <Typography variant="subtitle1">{v.desc}</Typography>
-                      </div>
-                    </Paper>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div>
+                    <Typography variant="h4">{v.name}</Typography>
+                    <Typography variant="subtitle1">{v.desc}</Typography>
+                  </CustomCard>
+                </Grid>
+              );
+            })}
+          </Grid>
         </Route>
         <Route exact path={`${match.url}/questionary/:questionaryId`}>
           <Questionary />

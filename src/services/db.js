@@ -76,3 +76,11 @@ export const loadQuestionaries = callback => {
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
+
+export const loadResearchGroups = callback => {
+  const unsubscribe = db
+    .collection("research-groups")
+    .orderBy("name", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
