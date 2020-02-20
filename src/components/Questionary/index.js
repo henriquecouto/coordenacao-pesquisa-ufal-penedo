@@ -13,7 +13,11 @@ import {
   Paper,
   Typography,
   Button,
-  TextField
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -71,6 +75,10 @@ export default function Questionary() {
   };
 
   const onChange = ({ target: { id, value } }) => {
+    setForm(old => ({ ...old, [id]: value }));
+  };
+
+  const onChangeSelect = id => ({ target: { value } }) => {
     setForm(old => ({ ...old, [id]: value }));
   };
 
@@ -136,6 +144,8 @@ export default function Questionary() {
     );
   }
 
+  console.log(form);
+
   return (
     <Grid container justify="center" alignItems="center">
       <form style={{ width: "100%" }} onSubmit={make} className={classes.root}>
@@ -145,7 +155,7 @@ export default function Questionary() {
               subsection.section === section.id &&
               questions.map(question => {
                 return (
-                  Object.keys(form).length === questions.length &&
+                  Object.keys(form).length > 0 &&
                   question.subsection === subsection.id && (
                     <Paper
                       className={classes.paper}
@@ -168,18 +178,43 @@ export default function Questionary() {
                               <Typography>{question.name}</Typography>
                             </Grid>
                             <Grid item>
-                              <TextField
-                                type="number"
-                                variant="outlined"
-                                size="small"
-                                margin="dense"
-                                id={question.id}
-                                value={form[question.id]}
-                                onChange={onChange}
-                                inputProps={{
-                                  min: 0
-                                }}
-                              />
+                              {question.type !== "select" && (
+                                <TextField
+                                  type={question.type}
+                                  variant="outlined"
+                                  size="small"
+                                  margin="dense"
+                                  id={question.id}
+                                  value={form[question.id]}
+                                  onChange={onChange}
+                                  inputProps={{
+                                    min: 0
+                                  }}
+                                />
+                              )}
+                              {question.type === "select" && (
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                >
+                                  <Select
+                                    id={question.id}
+                                    value={form[question.id]}
+                                    onChange={onChangeSelect(question.id)}
+                                  >
+                                    {question.options.map(option => {
+                                      return (
+                                        <MenuItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.name}
+                                        </MenuItem>
+                                      );
+                                    })}
+                                  </Select>
+                                </FormControl>
+                              )}
                             </Grid>
                           </Grid>
                         </Grid>
