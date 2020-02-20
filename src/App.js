@@ -12,7 +12,7 @@ import Header from "./components/Header";
 import Home from "./screens/Home";
 import ResearcherArea from "./screens/ResearcherArea";
 import Pibic from "./screens/Pibic";
-import ResearchGroups from "./screens/ResearchGroup";
+import ResearchGroups from "./screens/ResearchGroups";
 import Postgraduate from "./screens/Postgraduate";
 import Coordination from "./screens/Coordination";
 
