@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  useRouteMatch
-} from "react-router-dom";
+import { Route, useRouteMatch } from "react-router-dom";
 import {
   Home as HomeIcon,
   LocalLibrary as ResearcherAreaIcon,
@@ -74,20 +70,18 @@ export default function Site() {
   }, [match.url]);
 
   return (
-    <Router>
-      <Header position={position} routes={finalRoutes}>
-        {Object.keys(finalRoutes).map(route => {
-          return (
-            <Route
-              exact={!finalRoutes[route].notExact}
-              path={finalRoutes[route].path}
-              key={finalRoutes[route].path}
-            >
-              {finalRoutes[route].render(handlePosition)}
-            </Route>
-          );
-        })}
-      </Header>
-    </Router>
+    <Header position={position} routes={finalRoutes}>
+      {Object.keys(finalRoutes).map(route => {
+        return (
+          <Route
+            exact={!finalRoutes[route].notExact}
+            path={finalRoutes[route].path}
+            key={finalRoutes[route].path}
+          >
+            {finalRoutes[route].render(handlePosition)}
+          </Route>
+        );
+      })}
+    </Header>
   );
 }

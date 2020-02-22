@@ -23,7 +23,7 @@ const routes = {
 
 function App() {
   return (
-    <Router basename="/">
+    <Router>
       {Object.keys(routes).map(route => {
         return (
           <Route

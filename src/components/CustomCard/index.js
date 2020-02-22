@@ -3,13 +3,17 @@ import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   light: {
-    width: "100%",
-    marginTop: theme.spacing(2)
+    width: "100%"
   },
   dark: {
     width: "100%",
-    marginTop: theme.spacing(2),
     backgroundColor: theme.palette.primary.main,
+    color: theme.palette.background.paper,
+    marginBottom: theme.spacing(2)
+  },
+  error: {
+    width: "100%",
+    backgroundColor: theme.palette.error.main,
     color: theme.palette.background.paper
   },
   paperContent: {
