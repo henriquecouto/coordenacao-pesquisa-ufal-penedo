@@ -6,12 +6,13 @@ import {
   Link
 } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { listenLogin, signUp, signIn, signOut } from "../../../services/auth";
+import { listenLogin, signOut } from "../../../services/auth";
 import { loadQuestionaries } from "../../../services/db";
 import { Grid, CircularProgress, Button, Typography } from "@material-ui/core";
 import ForgotPass from "../../ForgotPass";
 import Questionary from "../../../components/Questionary";
 import CustomCard from "../../../components/CustomCard";
+import SignIn from "../../SignIn";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,7 +76,7 @@ export default function ResearcherArea({ setPosition }) {
           <signUp setLoading={setLoading} />
         </Route>
         <Route exact path={`${match.url}/`}>
-          <signIn setLoading={setLoading} />
+          <SignIn setLoading={setLoading} />
         </Route>
         <Route exact path={`${match.url}/forgot-password`}>
           <ForgotPass setLoading={setLoading} />
