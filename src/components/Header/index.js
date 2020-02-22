@@ -126,7 +126,7 @@ export default function Header({ children, position, routes }) {
                     variant="h6"
                     color="textPrimary"
                     component={Link}
-                    to="/"
+                    to="/site"
                     className={classes.titleText}
                   >
                     Coordenação de Pesquisa - Unidade Educacional de Penedo

@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  useRouteMatch
+} from "react-router-dom";
 import {
   Home as HomeIcon,
   LocalLibrary as ResearcherAreaIcon,
@@ -16,64 +20,70 @@ import Coordination from "./Coordination";
 import ResearcherArea from "./ResearcherArea";
 import Home from "./Home";
 
-const routes = {
+const routes = baseUrl => ({
   Home: {
     render: handlePosition => <Home setPosition={handlePosition} />,
-    path: "/",
+    path: baseUrl + "/",
     name: "Página Inicial",
     icon: <HomeIcon />
   },
   Pibic: {
     render: handlePosition => <Pibic setPosition={handlePosition} />,
-    path: "/pibic",
+    path: baseUrl + "/pibic",
     name: "PIBIC",
     icon: <PibicIcon />
   },
   ResearchGroups: {
     render: handlePosition => <ResearchGroups setPosition={handlePosition} />,
-    path: "/grupos-de-pesquisa",
+    path: baseUrl + "/grupos-de-pesquisa",
     name: "Grupos de Pesquisa",
     icon: <ReseachGroupsIcon />
   },
   Postgraduate: {
     render: handlePosition => <Postgraduate setPosition={handlePosition} />,
-    path: "/pos-graduacao",
+    path: baseUrl + "/pos-graduacao",
     name: "Pós Graduação",
     icon: <PostgraduateIcon />
   },
   Coordination: {
     render: handlePosition => <Coordination setPosition={handlePosition} />,
-    path: "/coordenacao",
+    path: baseUrl + "/coordenacao",
     name: "Coordenação",
     icon: <CoordinationIcon />
   },
   ResearcherArea: {
     render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
-    path: "/area-do-pesquisador",
+    path: baseUrl + "/area-do-pesquisador",
     name: "Área do Pesquisador",
     icon: <ResearcherAreaIcon />,
     notExact: true
   }
-};
+});
 
 export default function Site() {
   const [position, setPosition] = useState("");
+  const [finalRoutes, setFinalRoutes] = useState([]);
+  const match = useRouteMatch();
 
   const handlePosition = newPosition => {
-    setPosition(routes[newPosition].name);
+    setPosition(finalRoutes[newPosition].name);
   };
+
+  useEffect(() => {
+    setFinalRoutes(routes(match.url));
+  }, [match.url]);
 
   return (
     <Router>
-      <Header position={position} routes={routes}>
-        {Object.keys(routes).map(route => {
+      <Header position={position} routes={finalRoutes}>
+        {Object.keys(finalRoutes).map(route => {
           return (
             <Route
-              exact={!routes[route].notExact}
-              path={routes[route].path}
-              key={routes[route].path}
+              exact={!finalRoutes[route].notExact}
+              path={finalRoutes[route].path}
+              key={finalRoutes[route].path}
             >
-              {routes[route].render(handlePosition)}
+              {finalRoutes[route].render(handlePosition)}
             </Route>
           );
         })}

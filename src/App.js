@@ -1,23 +1,29 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import Site from "./screens/Site";
 import Admin from "./screens/Admin";
 
 const routes = {
+  Home: {
+    render: <Redirect from="/" exact to="/site" />,
+    path: "/"
+  },
   Site: {
     render: <Site />,
-    path: "/"
+    path: "/site",
+    notExact: true
   },
   Admin: {
     render: <Admin />,
-    path: "/admin"
+    path: "/admin",
+    notExact: true
   }
 };
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       {Object.keys(routes).map(route => {
         return (
           <Route

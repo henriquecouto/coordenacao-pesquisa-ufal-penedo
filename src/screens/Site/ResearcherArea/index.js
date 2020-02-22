@@ -13,6 +13,7 @@ import ForgotPass from "../../ForgotPass";
 import Questionary from "../../../components/Questionary";
 import CustomCard from "../../../components/CustomCard";
 import SignIn from "../../SignIn";
+import SignUp from "../SignUp";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,7 +74,7 @@ export default function ResearcherArea({ setPosition }) {
     return (
       <Router>
         <Route exact path={`${match.url}/register`}>
-          <signUp setLoading={setLoading} />
+          <SignUp setLoading={setLoading} />
         </Route>
         <Route exact path={`${match.url}/`}>
           <SignIn setLoading={setLoading} />
