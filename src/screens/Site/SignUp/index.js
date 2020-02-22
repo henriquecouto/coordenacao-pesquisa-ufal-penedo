@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { signUp, listenLogin } from "../../services/auth";
+import { signUp, listenLogin } from "../../../services/auth";
 import {
   Container,
   CssBaseline,

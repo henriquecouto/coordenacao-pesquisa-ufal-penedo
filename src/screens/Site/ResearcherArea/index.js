@@ -5,22 +5,13 @@ import {
   useRouteMatch,
   Link
 } from "react-router-dom";
-import SignUp from "../SignUp";
-import SignIn from "../SignIn";
-import ForgotPass from "../ForgotPass";
-import { listenLogin, signOut } from "../../services/auth";
-import {
-  CircularProgress,
-  Grid,
-  Paper,
-  Typography,
-  Button
-} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { loadQuestionaries } from "../../services/db";
-import Questionary from "../../components/Questionary";
-import CustomCard from "../../components/CustomCard";
+import { listenLogin, signUp, signIn, signOut } from "../../../services/auth";
+import { loadQuestionaries } from "../../../services/db";
+import { Grid, CircularProgress, Button, Typography } from "@material-ui/core";
+import ForgotPass from "../../ForgotPass";
+import Questionary from "../../../components/Questionary";
+import CustomCard from "../../../components/CustomCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,10 +72,10 @@ export default function ResearcherArea({ setPosition }) {
     return (
       <Router>
         <Route exact path={`${match.url}/register`}>
-          <SignUp setLoading={setLoading} />
+          <signUp setLoading={setLoading} />
         </Route>
         <Route exact path={`${match.url}/`}>
-          <SignIn setLoading={setLoading} />
+          <signIn setLoading={setLoading} />
         </Route>
         <Route exact path={`${match.url}/forgot-password`}>
           <ForgotPass setLoading={setLoading} />

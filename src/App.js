@@ -9,12 +9,12 @@ import {
   AssignmentInd as CoordinationIcon
 } from "@material-ui/icons";
 import Header from "./components/Header";
-import Home from "./screens/Home";
-import ResearcherArea from "./screens/ResearcherArea";
-import Pibic from "./screens/Pibic";
-import ResearchGroups from "./screens/ResearchGroups";
-import Postgraduate from "./screens/Postgraduate";
-import Coordination from "./screens/Coordination";
+import Pibic from "./screens/Site/Pibic";
+import ResearchGroups from "./screens/Site/ResearchGroups";
+import Postgraduate from "./screens/Site/Postgraduate";
+import Coordination from "./screens/Site/Coordination";
+import ResearcherArea from "./screens/Site/ResearcherArea";
+import Home from "./screens/Site/Home";
 
 const routes = {
   Home: {

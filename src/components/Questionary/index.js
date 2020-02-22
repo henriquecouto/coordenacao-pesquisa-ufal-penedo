@@ -15,7 +15,6 @@ import {
   Button,
   TextField,
   FormControl,
-  InputLabel,
   Select,
   MenuItem
 } from "@material-ui/core";
