@@ -12,7 +12,7 @@ import {
   School as PostgraduateIcon,
   AssignmentInd as CoordinationIcon
 } from "@material-ui/icons";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderSite";
 import Pibic from "./Pibic";
 import ResearchGroups from "./ResearchGroups";
 import Postgraduate from "./Postgraduate";
