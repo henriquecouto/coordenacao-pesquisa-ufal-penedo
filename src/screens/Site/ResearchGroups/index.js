@@ -7,7 +7,7 @@ import { loadResearchGroups } from "../../../services/db";
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 900,
-    padding: theme.spacing(0, 2, 2, 2)
+    padding: theme.spacing(2, 2, 2, 2)
   }
 }));
 
