@@ -76,10 +76,11 @@ export default function SignUp({ setLoading }) {
   const onChangeSelect = ({ target: { name, value } }) => {
     setForm(old => ({ ...old, [name]: value }));
   };
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
-    const result = await signUp(form);
+    const result = await signUp({ ...form, type: "default" });
     if (result.status) {
       setRedirect({ status: true });
     } else {
