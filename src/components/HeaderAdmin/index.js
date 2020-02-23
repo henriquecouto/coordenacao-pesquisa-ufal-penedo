@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header({ children, position, routes = [] }) {
-  const location = window.location.pathname.split("/")[1];
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
   const [redirect, setRedirect] = useState(false);
@@ -71,7 +70,7 @@ export default function Header({ children, position, routes = [] }) {
             component={Link}
             to={routes[route].path}
             onClick={toggleDrawer}
-            selected={`/${location}` === routes[route].path}
+            selected={position === routes[route].name}
           >
             <ListItemIcon>{routes[route].icon}</ListItemIcon>
             <ListItemText primary={routes[route].name} />

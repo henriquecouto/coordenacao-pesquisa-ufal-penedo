@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Route, useRouteMatch, Redirect } from "react-router-dom";
-import { Home as HomeIcon } from "@material-ui/icons";
+import {
+  Home as HomeIcon,
+  LocalLibrary as ResearcherAreaIcon,
+  FindInPage as PibicIcon,
+  GroupWork as ReseachGroupsIcon,
+  School as PostgraduateIcon,
+  AssignmentInd as CoordinationIcon
+} from "@material-ui/icons";
+
 import Header from "../../components/HeaderAdmin";
 import Home from "./Home";
 import SignIn from "../SignIn";
@@ -9,13 +17,20 @@ import { loadLoggedUser } from "../../services/db";
 import ForgotPass from "../ForgotPass";
 import { Grid, CircularProgress } from "@material-ui/core";
 import ErrorMessage from "../../components/ErrorMessage";
+import Pibic from "./Pibic";
 
 const routes = baseUrl => ({
   Home: {
     render: handlePosition => <Home setPosition={handlePosition} />,
-    path: baseUrl + "/",
+    path: baseUrl,
     name: "Página Inicial",
     icon: <HomeIcon />
+  },
+  Pibic: {
+    render: handlePosition => <Pibic setPosition={handlePosition} />,
+    path: baseUrl + "/pibic",
+    name: "Projetos PIBIC",
+    icon: <PibicIcon />
   }
 });
 
