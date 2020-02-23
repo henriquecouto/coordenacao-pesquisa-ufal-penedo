@@ -84,3 +84,13 @@ export const loadResearchGroups = callback => {
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
   return unsubscribe;
 };
+
+export const loadPibic = (callback, start = 0, limit = 10) => {
+  const unsubscribe = db
+    .collection("pibic")
+    .orderBy("name", "asc")
+    .startAt(start)
+    .limit(limit)
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
