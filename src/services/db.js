@@ -97,12 +97,28 @@ export const loadResearchGroups = callback => {
   return unsubscribe;
 };
 
-export const loadPibic = (callback, start = 0, limit = 10) => {
-  const unsubscribe = db
-    .collection("pibic")
-    .orderBy("name", "asc")
-    .startAt(start)
-    .limit(limit)
-    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
-  return unsubscribe;
+export const loadPibic = (
+  callback,
+  limit = 5,
+  start = 0,
+  after = true,
+  order = "asc"
+) => {
+  if (after) {
+    const unsubscribe = db
+      .collection("pibic")
+      .orderBy("title", order)
+      .startAfter(start)
+      .limit(limit)
+      .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+    return unsubscribe;
+  } else {
+    const unsubscribe = db
+      .collection("pibic")
+      .orderBy("title", order)
+      .startAt(start)
+      .limit(limit)
+      .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+    return unsubscribe;
+  }
 };
