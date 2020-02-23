@@ -11,7 +11,7 @@ export const addData = async (collection, data) => {
     });
     return { status: true };
   } catch (error) {
-    return { etatus: false, error };
+    return { status: false, error };
   }
 };
 
@@ -26,7 +26,7 @@ export const updateData = async (collection, doc, data) => {
       });
     return { status: true };
   } catch (error) {
-    return { etatus: false, error };
+    return { status: false, error };
   }
 };
 

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Input
-} from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import MaskedInput from "react-text-mask";
 
 import CustomModal from "../../../components/CustomModal";
@@ -21,7 +15,6 @@ function TextMaskCustom(props) {
       }}
       mask={[/[1-9]/, /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
       placeholderChar={"\u2000"}
-      showMask
     />
   );
 }
@@ -33,12 +26,14 @@ export default function ModalAdd({ state, handle, add }) {
     period: ""
   });
 
+  const clearForm = () => setForm({ title: "", leader: "", period: "" });
+
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
   };
 
   const save = async () => {
-    await add(form);
+    await add(form, clearForm);
   };
 
   return (
@@ -78,15 +73,18 @@ export default function ModalAdd({ state, handle, add }) {
         onChange={onChange}
         value={form.desc}
       />
-      <FormControl variant="outlined">
-        <InputLabel htmlFor="period">react-text-mask</InputLabel>
-        <Input
-          value={form.period}
-          onChange={onChange}
-          id="period"
-          inputComponent={TextMaskCustom}
-        />
-      </FormControl>
+      <TextField
+        id="period"
+        label="Ciclo"
+        fullWidth
+        margin="normal"
+        variant="outlined"
+        onChange={onChange}
+        value={form.period}
+        InputProps={{
+          inputComponent: TextMaskCustom
+        }}
+      />
     </CustomModal>
   );
 }
