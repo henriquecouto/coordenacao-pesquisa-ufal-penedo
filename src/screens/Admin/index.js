@@ -6,7 +6,6 @@ import {
   FindInPage as PibicIcon,
   GroupWork as ReseachGroupsIcon,
   School as PostgraduateIcon,
-  AssignmentInd as CoordinationIcon
 } from "@material-ui/icons";
 
 import Header from "../../components/HeaderAdmin";

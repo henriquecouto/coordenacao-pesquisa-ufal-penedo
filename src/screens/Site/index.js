@@ -6,13 +6,11 @@ import {
   FindInPage as PibicIcon,
   GroupWork as ReseachGroupsIcon,
   School as PostgraduateIcon,
-  AssignmentInd as CoordinationIcon
 } from "@material-ui/icons";
 import Header from "../../components/HeaderSite";
 import Pibic from "./Pibic";
 import ResearchGroups from "./ResearchGroups";
 import Postgraduate from "./Postgraduate";
-import Coordination from "./Coordination";
 import ResearcherArea from "./ResearcherArea";
 import Home from "./Home";
 
@@ -40,12 +38,6 @@ const routes = baseUrl => ({
     path: baseUrl + "/pos-graduacao",
     name: "Pós Graduação",
     icon: <PostgraduateIcon />
-  },
-  Coordination: {
-    render: handlePosition => <Coordination setPosition={handlePosition} />,
-    path: baseUrl + "/coordenacao",
-    name: "Coordenação",
-    icon: <CoordinationIcon />
   },
   ResearcherArea: {
     render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
