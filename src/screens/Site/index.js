@@ -41,12 +41,13 @@ const routes = baseUrl => ({
     name: "Pós Graduação",
     icon: <PostgraduateIcon />
   },
+  /* Não existirá mais
   Coordination: {
     render: handlePosition => <Coordination setPosition={handlePosition} />,
     path: baseUrl + "/coordenacao",
     name: "Coordenação",
     icon: <CoordinationIcon />
-  },
+  },*/
   ResearcherArea: {
     render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
     path: baseUrl + "/area-do-pesquisador",

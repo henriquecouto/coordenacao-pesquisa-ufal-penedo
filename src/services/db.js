@@ -97,6 +97,21 @@ export const loadResearchGroups = callback => {
   return unsubscribe;
 };
 
+export const loadCoordinationActivities = callback => {
+  const unsubscribe = db
+    .collection("coordination-activities")
+    .orderBy("order", "asc")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadCoordination = callback => {
+  const unsubscribe = db
+    .collection("coordination")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
 export const loadPibic = (
   callback,
   limit = 5,

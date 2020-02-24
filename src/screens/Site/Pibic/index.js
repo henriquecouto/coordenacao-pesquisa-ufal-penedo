@@ -68,8 +68,6 @@ export default function Pibic({ setPosition }) {
     setPosition("Pibic");
   }, [setPosition]);
 
-  console.log({ previousPage, nextPage });
-
   return (
     <>
       <Grid container className={classes.root} justify="center">
