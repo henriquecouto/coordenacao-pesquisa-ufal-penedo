@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { listenLogin, signOut } from "../../../services/auth";
+import { listenLogin, signOut, getLoggedUser } from "../../../services/auth";
 import { loadQuestionaries } from "../../../services/db";
 import { Grid, CircularProgress, Button, Typography } from "@material-ui/core";
 import ForgotPass from "../../ForgotPass";
@@ -42,12 +42,18 @@ export default function ResearcherArea({ setPosition }) {
   const classes = useStyles();
 
   const [logged, setLogged] = useState({ status: false });
+  const [currentUser, setCurrentUser] = useState("Teste");
   const [loading, setLoading] = useState(false);
 
   const [questionaries, setQuestionaries] = useState([]);
 
   const handleLogged = res => {
     setLogged(res);
+
+    if(res.status){
+      const user = getLoggedUser()
+      setCurrentUser(user.displayName)
+    }
     setLoading(false);
   };
 
@@ -105,7 +111,12 @@ export default function ResearcherArea({ setPosition }) {
                 </Button>
               }
             >
-              <Typography variant="h4">Área do Pesquisador</Typography>
+              
+            <Typography variant="h4">
+               {logged.status ? 
+               `Olá ${currentUser}, seja bem vindo!` : 
+               'Nome não informado'}
+            </Typography>
               <Typography variant="subtitle1">
                 Aqui você pode adicionar ou editar seus dados acadêmicos
               </Typography>
