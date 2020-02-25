@@ -50,13 +50,14 @@ const routes = baseUrl => ({
 
 export default function Site() {
   const [position, setPosition] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
   const [finalRoutes, setFinalRoutes] = useState([]);
   const match = useRouteMatch();
 
   const handlePosition = newPosition => {
     setPosition(finalRoutes[newPosition].name);
   };
-
+  
   useEffect(() => {
     setFinalRoutes(routes(match.url));
   }, [match.url]);
