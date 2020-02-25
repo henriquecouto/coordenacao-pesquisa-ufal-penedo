@@ -6,7 +6,7 @@ import {
   addData,
   loadResponses,
   updateData
-} from "../../services/db";
+} from "../../../../services/db";
 import {
   Grid,
   CircularProgress,
@@ -21,7 +21,7 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
-import { getLoggedUser } from "../../services/auth";
+import { getLoggedUser } from "../../../../services/auth";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,9 +95,7 @@ export default function Questionary() {
           setForm(arrayToObject(questions.map(v => ({ [v.id]: "0" }))));
         }
       }, questionaryId);
-      if (typeof unsubscribe === "function") {
-        return () => unsubscribe();
-      }
+      return () => unsubscribe();
     }
   }, [questionaryId, questions]);
 

@@ -6,54 +6,23 @@ import {
   Link
 } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { listenLogin, signOut, getLoggedUser } from "../../../services/auth";
+import { listenLogin, getLoggedUser } from "../../../services/auth";
 import { loadQuestionaries } from "../../../services/db";
-import { Grid, CircularProgress, Button, Typography } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import ForgotPass from "../../ForgotPass";
-import Questionary from "../../../components/Questionary";
-import CustomCard from "../../../components/CustomCard";
+import Questionary from "./Questionary";
 import SignIn from "../../SignIn";
 import SignUp from "../SignUp";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    maxWidth: 900,
-    padding: theme.spacing(2, 2, 2, 2)
-  },
-  paper: {
-    width: "100%",
-    marginTop: theme.spacing(2)
-  },
-  paperContent: {
-    padding: theme.spacing(4)
-  },
-  logout: {
-    margin: theme.spacing(2)
-  },
-  paperQuestionary: {
-    cursor: "pointer",
-    width: "100%",
-    marginTop: theme.spacing(2)
-  }
-}));
+import Home from "./Home";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
-  const classes = useStyles();
 
   const [logged, setLogged] = useState({ status: false });
-  const [currentUser, setCurrentUser] = useState("Teste");
   const [loading, setLoading] = useState(false);
-
-  const [questionaries, setQuestionaries] = useState([]);
 
   const handleLogged = res => {
     setLogged(res);
-
-    if(res.status){
-      const user = getLoggedUser()
-      setCurrentUser(user.displayName)
-    }
     setLoading(false);
   };
 
@@ -62,11 +31,6 @@ export default function ResearcherArea({ setPosition }) {
     listenLogin(handleLogged);
     setPosition("ResearcherArea");
   }, [setPosition]);
-
-  useEffect(() => {
-    const unsubscribe = loadQuestionaries(setQuestionaries);
-    return () => unsubscribe();
-  }, [loading]);
 
   if (loading) {
     return (
@@ -78,7 +42,7 @@ export default function ResearcherArea({ setPosition }) {
 
   if (!logged.status) {
     return (
-      <Router>
+      <>
         <Route exact path={`${match.url}/register`}>
           <SignUp setLoading={setLoading} />
         </Route>
@@ -88,70 +52,23 @@ export default function ResearcherArea({ setPosition }) {
         <Route exact path={`${match.url}/forgot-password`}>
           <ForgotPass setLoading={setLoading} />
         </Route>
-        <Route exact path={`${match.url}/questionary/:questionaryId`}>
-          <Questionary />
-        </Route>
-      </Router>
+      </>
     );
   }
 
   if (logged.status) {
     return (
-      <Router>
+      <>
         <Route exact path={`${match.url}/`}>
-          <Grid container className={classes.root} justify="center">
-            <CustomCard
-              button={
-                <Button
-                  className={classes.logout}
-                  color="primary"
-                  onClick={signOut}
-                >
-                  Sair
-                </Button>
-              }
-            >
-              
-            <Typography variant="h4">
-               {logged.status ? 
-               `Olá ${currentUser}, seja bem vindo!` : 
-               'Nome não informado'}
-            </Typography>
-              <Typography variant="subtitle1">
-                Aqui você pode adicionar ou editar seus dados acadêmicos
-              </Typography>
-            </CustomCard>
-          </Grid>
-
-          <Grid container className={classes.root}>
-            {questionaries.map(v => {
-              return (
-                <Grid
-                  item
-                  xs={12}
-                  key={v.id}
-                  component={Link}
-                  to={`${match.url}/questionary/${v.id}`}
-                  style={{
-                    textDecoration: "none"
-                  }}
-                >
-                  <CustomCard
-                    variant="dark"
-                    className={classes.paperQuestionary}
-                  >
-                    <Typography variant="h4">{v.name}</Typography>
-                    <Typography variant="subtitle1">{v.desc}</Typography>
-                  </CustomCard>
-                </Grid>
-              );
-            })}
-          </Grid>
+          <Home />
         </Route>
         <Route exact path={`${match.url}/questionary/:questionaryId`}>
           <Questionary />
         </Route>
-      </Router>
+        <Route exact path={`${match.url}/meu-perfil`}>
+          <h1> Hello Meu PErfil</h1>
+        </Route>
+      </>
     );
   }
 }

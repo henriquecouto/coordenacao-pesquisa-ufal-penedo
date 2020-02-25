@@ -40,14 +40,14 @@ const onSnapshot = (snapshot, next, one = false) => {
   return next(result);
 };
 
-export const loadLoggedUser = async (callback, uid) => {
+export const loadLoggedUser = (callback, uid) => {
   return db
     .collection("users")
     .where("uid", "==", uid)
     .onSnapshot(snapshot => onSnapshot(snapshot, callback, true));
 };
 
-export const loadResponses = async (callback, questionaryId) => {
+export const loadResponses = (callback, questionaryId) => {
   const { uid } = getLoggedUser();
   const unsubscribe = db
     .collection("responses")
