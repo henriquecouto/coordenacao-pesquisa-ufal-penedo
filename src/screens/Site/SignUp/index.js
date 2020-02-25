@@ -39,11 +39,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignUp({ setLoading }) {
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const specializationLabel = React.useRef(null);
+  const courseLabel = React.useRef(null);
+  const [labelsWidth, setLabelsWidth] = React.useState({
+    specialization: 0,
+    course: 0
+  });
   React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
+    setLabelsWidth({
+      specialization: specializationLabel.current.offsetWidth,
+      course: courseLabel.current.offsetWidth
+    });
   }, []);
+
   const history = useHistory();
 
   const classes = useStyles();
@@ -55,7 +63,8 @@ export default function SignUp({ setLoading }) {
     siape: "",
     knowledgearea: "",
     lattes: "",
-    specialization: ""
+    specialization: "",
+    course: ""
   });
   const [error, setError] = useState({ status: false, message: "" });
   const [redirect, setRedirect] = useState({ status: false });
@@ -117,22 +126,46 @@ export default function SignUp({ setLoading }) {
             required
             fullWidth
             margin="normal"
-            id="knowledgearea"
-            label="Área de Conhecimento"
-            onChange={onChange}
-            value={form.knowledgearea}
-          />
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            margin="normal"
             id="siape"
             label="Siape"
             type="tel"
             onChange={onChange}
             value={form.siape}
           />
+          <FormControl
+            variant="outlined"
+            className={classes.formControl}
+            style={{ width: "100%", marginTop: 15, marginBottom: 10 }}
+            required
+          >
+            <InputLabel ref={courseLabel} id="input-course">
+              Curso com maior carga horária
+            </InputLabel>
+            <Select
+              labelWidth={labelsWidth.course}
+              labelId="input-course"
+              name="course"
+              value={form.course}
+              onChange={onChangeSelect}
+            >
+              <MenuItem value="">
+                <em>Selecione</em>
+              </MenuItem>
+              <MenuItem value={"Engenharia de Pesca"}>
+                Engenharia de Pesca
+              </MenuItem>
+              <MenuItem value={"Ciências Biológicas"}>
+                Ciências Biológicas
+              </MenuItem>
+              <MenuItem value={"Turismo"}>Turismo</MenuItem>
+              <MenuItem value={"Engenharia de Produção"}>
+                Engenharia de Produção
+              </MenuItem>
+              <MenuItem value={"Sistemas de Informação"}>
+                Sistemas de Informação
+              </MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             variant="outlined"
             required
@@ -148,25 +181,36 @@ export default function SignUp({ setLoading }) {
             variant="outlined"
             className={classes.formControl}
             style={{ width: "100%", marginTop: 15, marginBottom: 10 }}
+            required
           >
-            <InputLabel ref={inputLabel} id="input-specialization">
+            <InputLabel ref={specializationLabel} id="input-specialization">
               Titulação
             </InputLabel>
             <Select
-              labelWidth={labelWidth}
+              labelWidth={labelsWidth.specialization}
               labelId="input-specialization"
               name="specialization"
               value={form.specialization}
               onChange={onChangeSelect}
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Selecione</em>
               </MenuItem>
               <MenuItem value={"Doutor (a)"}>Doutor (a)</MenuItem>
               <MenuItem value={"Mestre (a)"}>Mestre (a)</MenuItem>
               <MenuItem value={"Especialista"}>Especialista</MenuItem>
             </Select>
           </FormControl>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            margin="normal"
+            id="knowledgearea"
+            label="Área de Conhecimento"
+            onChange={onChange}
+            value={form.knowledgearea}
+          />
           <TextField
             variant="outlined"
             required

@@ -5,7 +5,7 @@ import {
   LocalLibrary as ResearcherAreaIcon,
   FindInPage as PibicIcon,
   GroupWork as ReseachGroupsIcon,
-  School as PostgraduateIcon,
+  School as PostgraduateIcon
 } from "@material-ui/icons";
 import Header from "../../components/HeaderSite";
 import Pibic from "./Pibic";
@@ -50,14 +50,13 @@ const routes = baseUrl => ({
 
 export default function Site() {
   const [position, setPosition] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
   const [finalRoutes, setFinalRoutes] = useState([]);
   const match = useRouteMatch();
 
   const handlePosition = newPosition => {
     setPosition(finalRoutes[newPosition].name);
   };
-  
+
   useEffect(() => {
     setFinalRoutes(routes(match.url));
   }, [match.url]);
