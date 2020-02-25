@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Icon } from "@material-ui/core";
+import { Typography, Grid, Icon, Avatar, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getFile } from "../../../services/storage";
 import CustomCard from "../../../components/CustomCard";
@@ -7,6 +7,7 @@ import {
   loadCoordinationActivities,
   loadCoordination
 } from "../../../services/db";
+import { Launch } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 2, 2, 2)
   },
   activity: {
-    maxWidth: 600
+    maxWidth: 600,
+    minWidth: 500
   },
   icon: {
     height: 80,
@@ -35,6 +37,10 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     color: "white",
     borderRadius: 80
+  },
+  avatar: {
+    width: theme.spacing(14),
+    height: theme.spacing(14)
   }
 }));
 
@@ -118,6 +124,52 @@ export default function Home({ setPosition }) {
                     </Grid>
                     <Grid item xs>
                       <Typography>{v.name}</Typography>
+                    </Grid>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </Grid>
+        </CustomCard>
+      </Grid>
+      <Grid item container className={classes.item}>
+        <CustomCard variant="dark">
+          <Grid container direction="column" spacing={6} alignItems="center">
+            <Grid item>
+              <Typography variant="h3">Coordenação</Typography>
+            </Grid>
+            <Grid item container spacing={6}>
+              {coordination.map(v => {
+                return (
+                  <Grid
+                    item
+                    xs
+                    container
+                    direction="row"
+                    alignItems="center"
+                    className={classes.activity}
+                    spacing={2}
+                    key={v.id}
+                  >
+                    <Grid item>
+                      <Avatar
+                        alt={v.name}
+                        src={v.photo}
+                        className={classes.avatar}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="h6">{v.name}</Typography>
+                      <Typography>
+                        <Link href={v.lattes} color="inherit">
+                          Ver Lattes <Launch style={{ fontSize: 15 }} />
+                        </Link>
+                      </Typography>
+                      <Typography>
+                        <Link href={"mailto:" + v.email} color="inherit">
+                          {v.email}
+                        </Link>
+                      </Typography>
                     </Grid>
                   </Grid>
                 );

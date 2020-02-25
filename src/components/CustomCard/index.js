@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.background.paper
   },
   paperContent: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    width: "100%"
   }
 }));
 export default function CustomCard({
