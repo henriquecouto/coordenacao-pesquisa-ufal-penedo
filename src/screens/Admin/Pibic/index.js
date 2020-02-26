@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Button, Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Grid, Button } from "@material-ui/core";
 import ModalAdd from "./ModalAdd";
 import { addData } from "../../../services/db";
-
-const CustomAlert = ({ open, handle, severity, message }) => {
-  return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handle}>
-      <Alert
-        onClose={handle}
-        severity={severity}
-        elevation={6}
-        variant="filled"
-      >
-        {message}
-      </Alert>
-    </Snackbar>
-  );
-};
+import CustomAlert from "../../../components/CustomAlert";
 
 export default function Pibic({ setPosition }) {
   const [modal, setModal] = useState(false);

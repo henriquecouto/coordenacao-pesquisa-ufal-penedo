@@ -49,8 +49,10 @@ export default function Home() {
                 className={classes.button}
                 component={Link}
                 to={match.url + "/meu-perfil"}
+                variant="contained"
+                color="primary"
               >
-                Meu Perfil
+                Perfil
               </Button>
               <Button
                 className={classes.button}

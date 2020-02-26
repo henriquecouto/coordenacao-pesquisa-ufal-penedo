@@ -5,15 +5,14 @@ import {
   useRouteMatch,
   Link
 } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { listenLogin, getLoggedUser } from "../../../services/auth";
-import { loadQuestionaries } from "../../../services/db";
+import { listenLogin } from "../../../services/auth";
 import { Grid, CircularProgress } from "@material-ui/core";
 import ForgotPass from "../../ForgotPass";
 import Questionary from "./Questionary";
 import SignIn from "../../SignIn";
 import SignUp from "../SignUp";
 import Home from "./Home";
+import Profile from "./Profile";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
@@ -66,7 +65,7 @@ export default function ResearcherArea({ setPosition }) {
           <Questionary />
         </Route>
         <Route exact path={`${match.url}/meu-perfil`}>
-          <h1> Hello Meu PErfil</h1>
+          <Profile />
         </Route>
       </>
     );
