@@ -33,21 +33,21 @@ export const updateData = async (collection, doc, data) => {
 const onSnapshot = (snapshot, next, one = false) => {
   let result;
   if (one) {
-    result = snapshot.docs[0].data();
+    result = { ...snapshot.docs[0].data(), id: snapshot.docs[0].id };
   } else {
     result = snapshot.docs.map(v => ({ id: v.id, ...v.data() }));
   }
   return next(result);
 };
 
-export const loadLoggedUser = async (callback, uid) => {
+export const loadLoggedUser = (callback, uid) => {
   return db
     .collection("users")
     .where("uid", "==", uid)
     .onSnapshot(snapshot => onSnapshot(snapshot, callback, true));
 };
 
-export const loadResponses = async (callback, questionaryId) => {
+export const loadResponses = (callback, questionaryId) => {
   const { uid } = getLoggedUser();
   const unsubscribe = db
     .collection("responses")
