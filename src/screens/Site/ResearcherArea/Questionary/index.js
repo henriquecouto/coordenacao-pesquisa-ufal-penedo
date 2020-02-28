@@ -105,14 +105,14 @@ export default function Questionary() {
   }, [questionaryId]);
 
   useEffect(() => {
-    const unsubscribe = loadSubsections(setSubsections);
+    const unsubscribe = loadSubsections(setSubsections, questionaryId);
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     const unsubscribe = loadQuestions(res => {
       setQuestions(res);
-    });
+    }, questionaryId);
     return () => unsubscribe();
   }, []);
 
@@ -141,7 +141,7 @@ export default function Questionary() {
     );
   }
 
-  console.log(form);
+  console.log(Object.keys(form).length);
 
   return (
     <Grid container justify="center" alignItems="center">
