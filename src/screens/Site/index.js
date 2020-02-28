@@ -5,13 +5,15 @@ import {
   LocalLibrary as ResearcherAreaIcon,
   FindInPage as PibicIcon,
   GroupWork as ReseachGroupsIcon,
-  School as PostgraduateIcon
+  School as PostgraduateIcon,
+  Event as EventIcon,
 } from "@material-ui/icons";
 import Header from "../../components/HeaderSite";
 import Pibic from "./Pibic";
 import ResearchGroups from "./ResearchGroups";
 import Postgraduate from "./Postgraduate";
 import ResearcherArea from "./ResearcherArea";
+import Event from "./Events";
 import Home from "./Home";
 
 const routes = baseUrl => ({
@@ -38,6 +40,12 @@ const routes = baseUrl => ({
     path: baseUrl + "/pos-graduacao",
     name: "Pós Graduação",
     icon: <PostgraduateIcon />
+  },
+  Events: {
+    render: handlePosition => <Event setPosition={handlePosition} />,
+    path: baseUrl + "/eventos",
+    name: "Eventos",
+    icon: <EventIcon />
   },
   ResearcherArea: {
     render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
