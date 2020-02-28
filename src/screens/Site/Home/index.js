@@ -161,7 +161,7 @@ export default function Home({ setPosition }) {
                     <Grid item>
                       <Typography variant="h6">{v.name}</Typography>
                       <Typography>
-                        <Link href={v.lattes} color="inherit">
+                        <Link href={v.lattes} target="_blank" rel="noopener" color="inherit">
                           Ver Lattes <Launch style={{ fontSize: 15 }} />
                         </Link>
                       </Typography>
