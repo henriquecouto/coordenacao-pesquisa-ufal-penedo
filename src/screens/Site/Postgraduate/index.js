@@ -40,7 +40,7 @@ export default function Postgraduate({ setPosition }) {
             <CustomCard variant="dark" key={postgraduate.id}>
               <Typography variant="h5">{postgraduate.title}</Typography>
               <Grid item>
-                <Typography variant="body1">Líder: {postgraduate.leader}</Typography>
+                <Typography variant="body1">Coordenador: {postgraduate.leader}</Typography>
               </Grid>
               <Grid item>
                   <Typography variant="subtitle1">
