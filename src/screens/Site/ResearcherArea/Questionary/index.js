@@ -16,8 +16,14 @@ import {
   TextField,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
+  IconButton,
+  InputAdornment,
+  Input,
+  OutlinedInput
 } from "@material-ui/core";
+
+import { Delete as RemoveIcon } from "@material-ui/icons";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
@@ -81,6 +87,31 @@ export default function Questionary() {
     setForm(old => ({ ...old, [id]: value }));
   };
 
+  const onChangeArray = (change, index, id, value) => {
+    const newForm = form;
+
+    const changes = {
+      value: () => {
+        newForm[id][index] = value;
+        setForm({ ...newForm });
+      },
+      new: () => {
+        newForm[id].push("");
+        setForm({ ...newForm });
+      },
+      delete: () => {
+        newForm[id].splice(index, 1);
+        setForm({ ...newForm });
+      }
+    };
+
+    changes[change](index);
+  };
+
+  const onChangeImage = ({ target: { id, files } }) => {
+    setForm(old => ({ ...old, [id]: files[0] }));
+  };
+
   useEffect(() => {
     if (getLoggedUser()) {
       const unsubscribe = loadResponses(response => {
@@ -92,7 +123,16 @@ export default function Questionary() {
             setForm(data);
           }
         } else {
-          setForm(arrayToObject(questions.map(v => ({ [v.id]: "0" }))));
+          setForm(
+            arrayToObject(
+              questions.map(v => {
+                if (v.type === "array") {
+                  return { [v.id]: [""] };
+                }
+                return { [v.id]: v.type === "number" ? "0" : "" };
+              })
+            )
+          );
         }
       }, questionaryId);
       return () => unsubscribe();
@@ -141,7 +181,7 @@ export default function Questionary() {
     );
   }
 
-  console.log(Object.keys(form).length);
+  console.log(form);
 
   return (
     <Grid container justify="center" alignItems="center">
@@ -175,43 +215,16 @@ export default function Questionary() {
                               <Typography>{question.name}</Typography>
                             </Grid>
                             <Grid item>
-                              {question.type !== "select" && (
-                                <TextField
-                                  type={question.type}
-                                  variant="outlined"
-                                  size="small"
-                                  margin="dense"
-                                  id={question.id}
-                                  value={form[question.id]}
-                                  onChange={onChange}
-                                  inputProps={{
-                                    min: 0
-                                  }}
-                                />
-                              )}
-                              {question.type === "select" && (
-                                <FormControl
-                                  variant="outlined"
-                                  className={classes.formControl}
-                                >
-                                  <Select
-                                    id={question.id}
-                                    value={form[question.id]}
-                                    onChange={onChangeSelect(question.id)}
-                                  >
-                                    {question.options.map(option => {
-                                      return (
-                                        <MenuItem
-                                          key={option.value}
-                                          value={option.value}
-                                        >
-                                          {option.name}
-                                        </MenuItem>
-                                      );
-                                    })}
-                                  </Select>
-                                </FormControl>
-                              )}
+                              {
+                                inputs(
+                                  question,
+                                  form[question.id],
+                                  onChange,
+                                  onChangeSelect(question.id),
+                                  onChangeArray,
+                                  onChangeImage
+                                )[question.type]
+                              }
                             </Grid>
                           </Grid>
                         </Grid>
@@ -241,3 +254,117 @@ export default function Questionary() {
     </Grid>
   );
 }
+
+const inputs = (
+  question,
+  value,
+  onChange,
+  onChangeSelect,
+  onChangeArray,
+  onChangeImage
+) => ({
+  number: (
+    <TextField
+      type={question.type}
+      variant="outlined"
+      size="small"
+      margin="dense"
+      id={question.id}
+      value={value}
+      onChange={onChange}
+      inputProps={{
+        min: 0
+      }}
+    />
+  ),
+  select: (
+    <FormControl variant="outlined">
+      <Select id={question.id} value={value} onChange={onChangeSelect}>
+        {question.options &&
+          question.options.map(option => {
+            return (
+              <MenuItem key={option.value} value={option.value}>
+                {option.name}
+              </MenuItem>
+            );
+          })}
+      </Select>
+    </FormControl>
+  ),
+  text: (
+    <TextField
+      type={question.type}
+      variant="outlined"
+      size="small"
+      margin="dense"
+      id={question.id}
+      value={value}
+      onChange={onChange}
+    />
+  ),
+  textarea: (
+    <TextField
+      multiline
+      rowsMax={6}
+      rows={4}
+      type={question.type}
+      variant="outlined"
+      size="small"
+      margin="dense"
+      id={question.id}
+      value={value}
+      onChange={onChange}
+      style={{ width: "100%", minWidth: 246 }}
+    />
+  ),
+  array: (
+    <Grid container direction="column">
+      {!!value.map &&
+        value.map((v, i) => {
+          return (
+            <Grid item key={i}>
+              <FormControl
+                variant="outlined"
+                size="small"
+                margin="dense"
+                style={{ width: "100%", maxWidth: 550, minWidth: 246 }}
+              >
+                <OutlinedInput
+                  multiline
+                  rowsMax={4}
+                  rows={1}
+                  type={question.type}
+                  id={question.id}
+                  value={v}
+                  onChange={({ target: { id, value } }) =>
+                    onChangeArray("value", i, id, value)
+                  }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        color="secondary"
+                        onClick={() =>
+                          onChangeArray("delete", i, question.id, null)
+                        }
+                        edge="end"
+                      >
+                        <RemoveIcon fontSize="small" />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+          );
+        })}
+      <Grid item>
+        <Button
+          color="primary"
+          onClick={() => onChangeArray("new", null, question.id, null)}
+        >
+          Adicionar publicação
+        </Button>
+      </Grid>
+    </Grid>
+  )
+});
