@@ -16,9 +16,12 @@ import {
   TextField,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
+  Snackbar,
+  IconButton,
 } from "@material-ui/core";
 
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import { getLoggedUser } from "../../../../services/auth";
@@ -53,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 let alreadyExists = false;
+let messageSnackbar = "";
 
 export default function Questionary() {
   const classes = useStyles();
@@ -62,6 +66,15 @@ export default function Questionary() {
   const [questions, setQuestions] = useState([]);
   const [form, setForm] = useState({});
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -126,8 +139,12 @@ export default function Questionary() {
       result = await addData("responses", { data: form, questionaryId });
     }
     if (result.status) {
+      setOpen(true);
+      messageSnackbar = "Salvo";
       setLoading(false);
     } else {
+      setOpen(true);
+      messageSnackbar = "Erro ao salvar";
       setLoading(false);
     }
     setLoading(false);
@@ -145,6 +162,23 @@ export default function Questionary() {
 
   return (
     <Grid container justify="center" alignItems="center">
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={messageSnackbar}
+        action={
+          <React.Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
       <form style={{ width: "100%" }} onSubmit={make} className={classes.root}>
         {sections.map(section => {
           return subsections.map(subsection => {
