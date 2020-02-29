@@ -108,10 +108,6 @@ export default function Questionary() {
     changes[change](index);
   };
 
-  const onChangeImage = ({ target: { id, files } }) => {
-    setForm(old => ({ ...old, [id]: files[0] }));
-  };
-
   useEffect(() => {
     if (getLoggedUser()) {
       const unsubscribe = loadResponses(response => {
@@ -221,8 +217,7 @@ export default function Questionary() {
                                   form[question.id],
                                   onChange,
                                   onChangeSelect(question.id),
-                                  onChangeArray,
-                                  onChangeImage
+                                  onChangeArray
                                 )[question.type]
                               }
                             </Grid>
@@ -255,14 +250,7 @@ export default function Questionary() {
   );
 }
 
-const inputs = (
-  question,
-  value,
-  onChange,
-  onChangeSelect,
-  onChangeArray,
-  onChangeImage
-) => ({
+const inputs = (question, value, onChange, onChangeSelect, onChangeArray) => ({
   number: (
     <TextField
       type={question.type}
