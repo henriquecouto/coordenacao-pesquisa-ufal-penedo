@@ -107,14 +107,14 @@ export default function Questionary() {
   useEffect(() => {
     const unsubscribe = loadSubsections(setSubsections, questionaryId);
     return () => unsubscribe();
-  }, []);
+  }, [questionaryId]);
 
   useEffect(() => {
     const unsubscribe = loadQuestions(res => {
       setQuestions(res);
     }, questionaryId);
     return () => unsubscribe();
-  }, []);
+  }, [questionaryId]);
 
   const make = async e => {
     e.preventDefault();
