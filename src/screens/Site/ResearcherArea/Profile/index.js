@@ -70,7 +70,6 @@ export default function Profile() {
   }, [editing]);
 
   useEffect(() => {
-    const loggedUser = getLoggedUser();
     const unsubscribe = loadLoggedUser(
       ({
         fullName,
@@ -92,8 +91,7 @@ export default function Profile() {
           photo
         });
         doc = id;
-      },
-      loggedUser.uid
+      }
     );
     return () => unsubscribe();
   }, [editing]);

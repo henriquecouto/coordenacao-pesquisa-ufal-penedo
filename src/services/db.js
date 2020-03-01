@@ -40,11 +40,24 @@ const onSnapshot = (snapshot, next, one = false) => {
   return next(result);
 };
 
-export const loadLoggedUser = async (callback, uid) => {
-  return db
+export const loadShortBio = callback => {
+  const { uid } = getLoggedUser();
+  const unsubscribe = db
+    .collection("short-bio")
+    .where("uid", "==", uid)
+    .onSnapshot(snapshot => {
+      onSnapshot(snapshot, callback, true);
+    });
+  return unsubscribe;
+};
+
+export const loadLoggedUser = callback => {
+  const { uid } = getLoggedUser();
+  const unsubscribe = db
     .collection("users")
     .where("uid", "==", uid)
     .onSnapshot(snapshot => onSnapshot(snapshot, callback, true));
+  return unsubscribe;
 };
 
 export const loadResponses = (callback, questionaryId) => {

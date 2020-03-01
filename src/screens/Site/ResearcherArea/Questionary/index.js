@@ -32,8 +32,6 @@ import { Delete as RemoveIcon, Print } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams, useHistory } from "react-router-dom";
 import { getLoggedUser } from "../../../../services/auth";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import Pdf from "../../../../components/Pdf";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -186,7 +184,6 @@ export default function Questionary() {
     setLoading(false);
   };
 
-
   if (loading || !sections.length || !subsections.length || !questions.length) {
     return (
       <Grid container justify="center">
@@ -197,7 +194,7 @@ export default function Questionary() {
 
   return (
     <>
-    <CustomAlert
+      <CustomAlert
         open={result === "success"}
         handle={clearResult}
         severity="success"
@@ -210,99 +207,86 @@ export default function Questionary() {
         message="Ocorreu um erro, tente novamente!"
       />
 
-    <Grid container justify="center" alignItems="center">
-      <form style={{ width: "100%" }} onSubmit={make} className={classes.root}>
-        {sections.map(section => {
-          return subsections.map(subsection => {
-            return (
-              subsection.section === section.id &&
-              questions.map(question => {
-                return (
-                  Object.keys(form).length > 0 &&
-                  question.subsection === subsection.id && (
-                    <Paper
-                      className={classes.paper}
-                      style={{ marginTop: question.priority !== "1" && 5 }}
-                      key={question.id}
-                    >
-                      <Grid container direction="column">
-                        {question.priority === "1" && (
-                          <Grid item className={classes.paperHeader}>
-                            <Typography variant="h6">
-                              {section.name.toUpperCase()}
-                              {subsection.name && bull}
-                              {subsection.name}
-                            </Typography>
-                          </Grid>
-                        )}
-                        <Grid item className={classes.paperContent}>
-                          <Grid container direction="column" spacing={0}>
-                            <Grid item>
-                              <Typography>{question.name}</Typography>
+      <Grid container justify="center" alignItems="center">
+        <form
+          style={{ width: "100%" }}
+          onSubmit={make}
+          className={classes.root}
+        >
+          {sections.map(section => {
+            return subsections.map(subsection => {
+              return (
+                subsection.section === section.id &&
+                questions.map(question => {
+                  return (
+                    Object.keys(form).length > 0 &&
+                    question.subsection === subsection.id && (
+                      <Paper
+                        className={classes.paper}
+                        style={{ marginTop: question.priority !== "1" && 5 }}
+                        key={question.id}
+                      >
+                        <Grid container direction="column">
+                          {question.priority === "1" && (
+                            <Grid item className={classes.paperHeader}>
+                              <Typography variant="h6">
+                                {section.name.toUpperCase()}
+                                {subsection.name && bull}
+                                {subsection.name}
+                              </Typography>
                             </Grid>
-                            <Grid item>
-                              {
-                                inputs(
-                                  question,
-                                  form[question.id],
-                                  onChange,
-                                  onChangeSelect(question.id),
-                                  onChangeArray
-                                )[question.type]
-                              }
+                          )}
+                          <Grid item className={classes.paperContent}>
+                            <Grid container direction="column" spacing={0}>
+                              <Grid item>
+                                <Typography>{question.name}</Typography>
+                              </Grid>
+                              <Grid item>
+                                {
+                                  inputs(
+                                    question,
+                                    form[question.id],
+                                    onChange,
+                                    onChangeSelect(question.id),
+                                    onChangeArray
+                                  )[question.type]
+                                }
+                              </Grid>
                             </Grid>
                           </Grid>
                         </Grid>
-                      </Grid>
-                    </Paper>
-                  )
-                );
-              })
-            );
-          });
-        })}
+                      </Paper>
+                    )
+                  );
+                })
+              );
+            });
+          })}
 
-        <Grid item xs={12}>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                type="submit"
-              >
-                Salvar
-              </Button>
+          <Grid item xs={12}>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  type="submit"
+                >
+                  Salvar
+                </Button>
 
-              <Button
-                color="primary"
-                className={classes.button}
-                onClick={() => history.push("/site/area-do-pesquisador")}
-              >
-                Cancelar
-              </Button>
-            </Grid>
-            {/* {questionary.printable && (
-              <Grid item className={classes.button}>
-                <Pdf
-                  loadData={callback => {
-                    loadLoggedUser(userData => {
-                      callback({
-                        ...userData,
-                        researchGate: form[Object.keys(form)[3]],
-                        orcid: form[Object.keys(form)[2]],
-                        resume: form[Object.keys(form)[1]],
-                        publications: form[Object.keys(form)[0]]
-                      });
-                    }, getLoggedUser().uid);
-                  }}
-                />
+                <Button
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => history.push("/site/area-do-pesquisador")}
+                >
+                  Cancelar
+                </Button>
               </Grid>
-            )} */}
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </Grid>
+        </form>
+      </Grid>
     </>
   );
 }

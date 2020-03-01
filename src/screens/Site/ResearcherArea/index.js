@@ -13,6 +13,7 @@ import SignIn from "../../SignIn";
 import SignUp from "../SignUp";
 import Home from "./Home";
 import Profile from "./Profile";
+import ShortBio from "./ShortBio";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
@@ -66,6 +67,9 @@ export default function ResearcherArea({ setPosition }) {
         </Route>
         <Route exact path={`${match.url}/meu-perfil`}>
           <Profile />
+        </Route>
+        <Route exact path={`${match.url}/short-bio`}>
+          <ShortBio />
         </Route>
       </>
     );

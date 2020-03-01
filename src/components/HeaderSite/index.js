@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   logo: {
     height: 60,
     objectFit: "contain",
-    margin: theme.spacing(1,2)
+    margin: theme.spacing(1, 2)
   },
   drawer: {
     width: drawerWidth,
@@ -46,7 +46,11 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      marginTop: theme.spacing(6)
+    }
   },
   toolbar: theme.mixins.toolbar,
   title: {
@@ -126,8 +130,18 @@ export default function Header({ children, position, routes }) {
                     </IconButton>
                   </Grid>
                 </Hidden>
-                <Grid item container alignItems="center" xs className={classes.title}>
-                <img src={require("../../assets/brasao-ufal.png")} alt="logo" className={classes.logo} />
+                <Grid
+                  item
+                  container
+                  alignItems="center"
+                  xs
+                  className={classes.title}
+                >
+                  <img
+                    src={require("../../assets/brasao-ufal.png")}
+                    alt="logo"
+                    className={classes.logo}
+                  />
                   <Typography
                     variant="h6"
                     color="textPrimary"
@@ -156,7 +170,6 @@ export default function Header({ children, position, routes }) {
         onClose={toggleDrawer}
         onOpen={toggleDrawer}
       >
-        <div className={classes.toolbar} />
         <MenuList />
       </SwipeableDrawer>
       <main className={classes.content}>

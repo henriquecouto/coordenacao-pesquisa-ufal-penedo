@@ -74,6 +74,22 @@ export default function Home() {
       </Grid>
 
       <Grid container className={classes.root}>
+        <Grid
+          item
+          xs={12}
+          component={Link}
+          to={`${match.url}/short-bio`}
+          style={{
+            textDecoration: "none"
+          }}
+        >
+          <CustomCard variant="dark" className={classes.paperQuestionary}>
+            <Typography variant="h4">Short Bio</Typography>
+            <Typography variant="subtitle1">
+              Crie e imprima uma mini biografia sobre sua vida acadêmica.
+            </Typography>
+          </CustomCard>
+        </Grid>
         {questionaries.map(v => {
           return (
             <Grid
