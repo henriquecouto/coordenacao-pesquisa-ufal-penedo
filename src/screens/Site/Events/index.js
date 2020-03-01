@@ -46,7 +46,7 @@ export default function Pibic({ setPosition }) {
               style={{ textDecoration: "none" }}
             >
               <CustomCard variant="dark">
-                <Typography variant="h6">{event.title}</Typography>
+                <Typography variant="h5">{event.title}</Typography>
                 <Typography variant="subtitle1">{event.description}</Typography>
               </CustomCard>
             </Link>
