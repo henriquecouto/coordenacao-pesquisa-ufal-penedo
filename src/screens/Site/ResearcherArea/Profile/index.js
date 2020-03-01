@@ -11,11 +11,13 @@ import {
   Select,
   MenuItem,
   Divider,
-  CircularProgress
+  CircularProgress,
+  Avatar
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CustomCard from "../../../../components/CustomCard";
 import CustomAlert from "../../../../components/CustomAlert";
+import { saveFile } from "../../../../services/storage";
 
 let doc;
 
@@ -27,7 +29,11 @@ const useStyles = makeStyles(theme => ({
   content: {
     padding: theme.spacing(3)
   },
-  item: { marginTop: theme.spacing(4) }
+  item: { marginTop: theme.spacing(4) },
+  avatar: {
+    width: 150,
+    height: 150
+  }
 }));
 
 export default function Profile() {
@@ -52,6 +58,7 @@ export default function Profile() {
     specialization: "",
     course: ""
   });
+  const [image, setImage] = useState(null);
 
   React.useEffect(() => {
     if (editing) {
@@ -72,7 +79,8 @@ export default function Profile() {
         lattes,
         specialization,
         course,
-        id
+        id,
+        photo
       }) => {
         setForm({
           fullName,
@@ -80,7 +88,8 @@ export default function Profile() {
           knowledgearea,
           lattes,
           specialization,
-          course
+          course,
+          photo
         });
         doc = id;
       },
@@ -101,19 +110,35 @@ export default function Profile() {
     setForm(old => ({ ...old, [name]: value }));
   };
 
+  const onChangeImage = ({ target: { id, files } }) => {
+    setForm(old => ({ ...old, [id]: URL.createObjectURL(files[0]) }));
+    setImage(files[0]);
+  };
+
   const clearResult = () => setResult("");
 
-  const save = async e => {
+  const save = e => {
     e.preventDefault();
     setLoading(true);
 
-    const result = await updateData("users", doc, form);
-    if (result.status) {
-      setResult("success");
-      setEditing(false);
-    } else {
-      setResult("error");
+    const imageUploaded = async imageUrl => {
+      const result = await updateData("users", doc, {
+        ...form,
+        photo: imageUrl
+      });
+      if (result.status) {
+        setResult("success");
+        setEditing(false);
+      } else {
+        setResult("error");
+      }
+    };
+
+    if (image) {
+      const name = "profile-" + doc;
+      saveFile("images/users/" + name, image, imageUploaded);
     }
+
     setLoading(false);
   };
 
@@ -176,6 +201,13 @@ export default function Profile() {
           >
             {!editing && (
               <Grid container direction="column" spacing={4}>
+                {form.photo && (
+                  <Grid item>
+                    <Grid container justify="center">
+                      <Avatar className={classes.avatar} src={form.photo} />
+                    </Grid>
+                  </Grid>
+                )}
                 <Grid item>
                   <Typography>Nome Completo:</Typography>
                   <Typography variant="h6">
@@ -223,6 +255,28 @@ export default function Profile() {
 
             {editing && (
               <form onSubmit={save}>
+                <Grid container justify="center">
+                  <Avatar className={classes.avatar} src={form.photo} />
+                  <>
+                    <input
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      id="photo"
+                      type="file"
+                      // value={form.photo}
+                      onChange={onChangeImage}
+                    />
+                    <label htmlFor="photo">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                      >
+                        Selecionar foto
+                      </Button>
+                    </label>
+                  </>
+                </Grid>
                 <TextField
                   variant="outlined"
                   required
