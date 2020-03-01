@@ -73,17 +73,11 @@ export default function Home({ setPosition }) {
   }, [setPosition]);
   return (
     <Grid container justify="center" className={classes.root}>
-      <Grid
-        item
-        container
-        className={`${classes.item}, ${classes.header}`}
-        direction="column"
-        justify="center"
-      >
-        <Typography variant="h2">Coordenação de Pesquisa</Typography>
-        <Typography variant="h2">Unidade Educacional de Penedo</Typography>
+      <Grid item container className={classes.item}>
+        <CustomCard>
+            <Typography variant="h4">Atribuições da Coordenação</Typography>
+        </CustomCard>
       </Grid>
-
       <Grid item container className={classes.item}>
         <CustomCard variant="light">
           <Grid container direction="column" spacing={2}>
@@ -161,7 +155,7 @@ export default function Home({ setPosition }) {
                     <Grid item>
                       <Typography variant="h6">{v.name}</Typography>
                       <Typography>
-                        <Link href={v.lattes} color="inherit">
+                        <Link href={v.lattes} target="_blank" rel="noopener" color="inherit">
                           Ver Lattes <Launch style={{ fontSize: 15 }} />
                         </Link>
                       </Typography>

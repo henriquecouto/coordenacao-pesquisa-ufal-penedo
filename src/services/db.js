@@ -129,6 +129,13 @@ export const loadPostgraduate = callback => {
   return unsubscribe;
 };
 
+export const loadEvents = callback => {
+  const unsubscribe = db
+    .collection("events")
+    .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
 export const loadPibic = (
   callback,
   limit = 5,
