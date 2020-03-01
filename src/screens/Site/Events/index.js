@@ -29,20 +29,30 @@ export default function Pibic({ setPosition }) {
       <Grid container className={classes.root} justify="center">
         <CustomCard>
           <Typography variant="h4">Eventos</Typography>
+          <Typography variant="subtitle1">
+            Aqui está a lista dos eventos da Coordenação de Pesquisa!
+          </Typography>
         </CustomCard>
       </Grid>
-       <Grid container className={classes.root} justify="center">
-       {events.map(event => {
-         return (
-          <Link href={event.link} target="_blank" rel="noopener" color="inherit" style={{textDecoration: 'none'}}>
-            <CustomCard variant="dark">
+      <Grid container className={classes.root} justify="center">
+        {events.map(event => {
+          return (
+            <Link
+              key={event.id}
+              href={event.link}
+              target="_blank"
+              rel="noopener"
+              color="inherit"
+              style={{ textDecoration: "none" }}
+            >
+              <CustomCard variant="dark">
                 <Typography variant="h6">{event.title}</Typography>
-                <Typography variant="subtitle1">Descrição: {event.description}</Typography>
-            </CustomCard>
-          </Link>
-         )
-       })}
-       </Grid>
+                <Typography variant="subtitle1">{event.description}</Typography>
+              </CustomCard>
+            </Link>
+          );
+        })}
+      </Grid>
     </>
   );
 }
