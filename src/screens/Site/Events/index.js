@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Grid, Button } from "@material-ui/core";
+import { Typography, Grid, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { loadPibic } from "../../../services/db";
+import { loadEvents } from "../../../services/db";
 import CustomCard from "../../../components/CustomCard";
 
 const useStyles = makeStyles(theme => ({
@@ -13,10 +13,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function Pibic({ setPosition }) {
   const classes = useStyles();
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     setPosition("Events");
   }, [setPosition]);
+
+  useEffect(() => {
+    const unsubscribe = loadEvents(setEvents);
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
@@ -25,11 +31,18 @@ export default function Pibic({ setPosition }) {
           <Typography variant="h4">Eventos</Typography>
         </CustomCard>
       </Grid>
-     {/*  <Grid container className={classes.root} justify="center">
-        <CustomCard variant="dark">
-            <Typography variant="h5"></Typography>
-        </CustomCard>
-        </Grid> */}
+       <Grid container className={classes.root} justify="center">
+       {events.map(event => {
+         return (
+          <Link href={event.link} target="_blank" rel="noopener" color="inherit" style={{textDecoration: 'none'}}>
+            <CustomCard variant="dark">
+                <Typography variant="h6">{event.title}</Typography>
+                <Typography variant="subtitle1">Descrição: {event.description}</Typography>
+            </CustomCard>
+          </Link>
+         )
+       })}
+       </Grid>
     </>
   );
 }
