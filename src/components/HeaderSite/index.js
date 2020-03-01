@@ -30,6 +30,11 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
+  logo: {
+    height: 60,
+    objectFit: "contain",
+    margin: theme.spacing(1,2)
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
@@ -121,7 +126,8 @@ export default function Header({ children, position, routes }) {
                     </IconButton>
                   </Grid>
                 </Hidden>
-                <Grid item xs className={classes.title}>
+                <Grid item container alignItems="center" xs className={classes.title}>
+                <img src={require("../../assets/brasao-ufal.png")} alt="logo" className={classes.logo} />
                   <Typography
                     variant="h6"
                     color="textPrimary"
