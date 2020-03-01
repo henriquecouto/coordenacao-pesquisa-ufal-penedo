@@ -5,7 +5,9 @@ import {
   loadQuestions,
   addData,
   loadResponses,
-  updateData
+  updateData,
+  loadQuestionary,
+  loadLoggedUser
 } from "../../../../services/db";
 import {
   Grid,
@@ -23,11 +25,13 @@ import {
   OutlinedInput
 } from "@material-ui/core";
 
-import { Delete as RemoveIcon } from "@material-ui/icons";
+import { Delete as RemoveIcon, Print } from "@material-ui/icons";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getLoggedUser } from "../../../../services/auth";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Pdf from "../../../../components/Pdf";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,8 +65,10 @@ const useStyles = makeStyles(theme => ({
 let alreadyExists = false;
 
 export default function Questionary() {
+  const history = useHistory();
   const classes = useStyles();
   const { questionaryId } = useParams();
+  const [questionary, setQuestionary] = useState([]);
   const [sections, setSections] = useState([]);
   const [subsections, setSubsections] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -114,7 +120,6 @@ export default function Questionary() {
         if (response[0]) {
           alreadyExists = response[0].id;
           const { data } = response[0];
-          console.log({ data });
           if (data && !!Object.entries(data).length) {
             setForm(data);
           }
@@ -152,6 +157,11 @@ export default function Questionary() {
     return () => unsubscribe();
   }, [questionaryId]);
 
+  useEffect(() => {
+    const unsubscribe = loadQuestionary(setQuestionary, questionaryId);
+    return () => unsubscribe();
+  }, [questionaryId]);
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
@@ -176,8 +186,6 @@ export default function Questionary() {
       </Grid>
     );
   }
-
-  console.log(form);
 
   return (
     <Grid container justify="center" alignItems="center">
@@ -233,17 +241,43 @@ export default function Questionary() {
         })}
 
         <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            type="submit"
-          >
-            Salvar
-          </Button>
-          <Button color="primary" className={classes.button}>
-            Cancelar
-          </Button>
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                type="submit"
+              >
+                Salvar
+              </Button>
+
+              <Button
+                color="primary"
+                className={classes.button}
+                onClick={() => history.push("/site/area-do-pesquisador")}
+              >
+                Cancelar
+              </Button>
+            </Grid>
+            {/* {questionary.printable && (
+              <Grid item className={classes.button}>
+                <Pdf
+                  loadData={callback => {
+                    loadLoggedUser(userData => {
+                      callback({
+                        ...userData,
+                        researchGate: form[Object.keys(form)[3]],
+                        orcid: form[Object.keys(form)[2]],
+                        resume: form[Object.keys(form)[1]],
+                        publications: form[Object.keys(form)[0]]
+                      });
+                    }, getLoggedUser().uid);
+                  }}
+                />
+              </Grid>
+            )} */}
+          </Grid>
         </Grid>
       </form>
     </Grid>

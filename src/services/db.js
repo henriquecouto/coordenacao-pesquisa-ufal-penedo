@@ -40,7 +40,7 @@ const onSnapshot = (snapshot, next, one = false) => {
   return next(result);
 };
 
-export const loadLoggedUser = (callback, uid) => {
+export const loadLoggedUser = async (callback, uid) => {
   return db
     .collection("users")
     .where("uid", "==", uid)
@@ -81,6 +81,14 @@ export const loadSections = (callback, questionaryId) => {
     .where("questionary", "==", questionaryId)
     .orderBy("priority", "asc")
     .onSnapshot(snapshot => onSnapshot(snapshot, callback));
+  return unsubscribe;
+};
+
+export const loadQuestionary = (callback, questionaryId) => {
+  const unsubscribe = db
+    .collection("questionaries")
+    .doc(questionaryId)
+    .onSnapshot(snapshot => callback(snapshot.data()));
   return unsubscribe;
 };
 
