@@ -25,6 +25,8 @@ import {
   OutlinedInput
 } from "@material-ui/core";
 
+import CustomAlert from "../../../../components/CustomAlert";
+
 import { Delete as RemoveIcon, Print } from "@material-ui/icons";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -74,6 +76,7 @@ export default function Questionary() {
   const [questions, setQuestions] = useState([]);
   const [form, setForm] = useState({});
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
 
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -162,6 +165,8 @@ export default function Questionary() {
     return () => unsubscribe();
   }, [questionaryId]);
 
+  const clearResult = () => setResult("");
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
@@ -172,12 +177,15 @@ export default function Questionary() {
       result = await addData("responses", { data: form, questionaryId });
     }
     if (result.status) {
+      setResult("success");
       setLoading(false);
     } else {
+      setResult("error");
       setLoading(false);
     }
     setLoading(false);
   };
+
 
   if (loading || !sections.length || !subsections.length || !questions.length) {
     return (
@@ -188,6 +196,20 @@ export default function Questionary() {
   }
 
   return (
+    <>
+    <CustomAlert
+        open={result === "success"}
+        handle={clearResult}
+        severity="success"
+        message="Dados salvos com sucesso!"
+      />
+      <CustomAlert
+        open={result === "error"}
+        handle={clearResult}
+        severity="error"
+        message="Ocorreu um erro, tente novamente!"
+      />
+
     <Grid container justify="center" alignItems="center">
       <form style={{ width: "100%" }} onSubmit={make} className={classes.root}>
         {sections.map(section => {
@@ -281,6 +303,7 @@ export default function Questionary() {
         </Grid>
       </form>
     </Grid>
+    </>
   );
 }
 
