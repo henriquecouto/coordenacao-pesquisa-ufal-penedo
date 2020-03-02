@@ -15,8 +15,14 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Delete as RemoveIcon, Help as HelpIcon } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
-import { updateData, addData, loadShortBio } from "../../../../services/db";
+import {
+  updateData,
+  addData,
+  loadShortBio,
+  loadLoggedUser
+} from "../../../../services/db";
 import CustomAlert from "../../../../components/CustomAlert";
+import ViewButton from "./ViewButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,15 +63,47 @@ export default function ShortBio() {
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
+  const [fullData, setFullData] = useState({});
   const [form, setForm] = useState({
     researchGate: "",
     orcid: "",
     resume: "",
-    publications: [""]
+    publications: [""],
+    education: [""]
   });
 
   useEffect(() => {
-    const unsubscribe = loadShortBio(res => setForm(res.data));
+    const unsubscribe = loadShortBio(res => {
+      alreadyExists = res.id;
+      setForm(old => ({ ...old, ...res.data }));
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = loadLoggedUser(
+      ({
+        fullName,
+        siape,
+        knowledgearea,
+        lattes,
+        specialization,
+        course,
+        photo,
+        email
+      }) => {
+        setFullData({
+          fullName,
+          siape,
+          knowledgearea,
+          lattes,
+          specialization,
+          course,
+          photo,
+          email
+        });
+      }
+    );
     return () => unsubscribe();
   }, []);
 
@@ -339,6 +377,74 @@ export default function ShortBio() {
               </Grid>
             </Grid>
           </Paper>
+          <Paper className={classes.paper} style={{ marginTop: 5 }}>
+            <Grid container direction="column">
+              <Grid item className={classes.paperContent}>
+                <Grid container direction="column" spacing={0}>
+                  <Grid item>
+                    <Typography>Educação</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Grid container direction="column">
+                      {form.education.map((v, i) => {
+                        return (
+                          <Grid item key={i}>
+                            <FormControl
+                              variant="outlined"
+                              size="small"
+                              margin="dense"
+                              className={classes.input}
+                            >
+                              <OutlinedInput
+                                multiline
+                                rowsMax={4}
+                                rows={1}
+                                type="text"
+                                id={"education"}
+                                placeholder="Ex.: Bacharel em Sistemas de Informação - 2020"
+                                value={v}
+                                onChange={({ target: { id, value } }) =>
+                                  onChangeArray("value", i, id, value)
+                                }
+                                endAdornment={
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      color="secondary"
+                                      onClick={() =>
+                                        onChangeArray(
+                                          "delete",
+                                          i,
+                                          "education",
+                                          null
+                                        )
+                                      }
+                                      edge="end"
+                                    >
+                                      <RemoveIcon fontSize="small" />
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                              />
+                            </FormControl>
+                          </Grid>
+                        );
+                      })}
+                      <Grid item>
+                        <Button
+                          color="primary"
+                          onClick={() =>
+                            onChangeArray("new", null, "education", null)
+                          }
+                        >
+                          Adicionar publicação
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
           <Grid item xs={12}>
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
@@ -358,6 +464,11 @@ export default function ShortBio() {
                 >
                   Cancelar
                 </Button>
+              </Grid>
+              <Grid item>
+                {!!Object.keys(fullData).length && (
+                  <ViewButton data={{ ...fullData, ...form }} />
+                )}
               </Grid>
             </Grid>
           </Grid>
