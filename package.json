@@ -6,6 +6,8 @@
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
+    "@progress/kendo-drawing": "^1.13.7",
+    "@progress/kendo-react-pdf": "^3.11.0",
     "@react-pdf/renderer": "^1.6.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
