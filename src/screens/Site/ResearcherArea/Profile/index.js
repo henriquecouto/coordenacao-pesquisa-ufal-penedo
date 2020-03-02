@@ -115,7 +115,7 @@ export default function Profile() {
 
   const clearResult = () => setResult("");
 
-  const save = e => {
+  const save = async e => {
     e.preventDefault();
     setLoading(true);
 
@@ -135,7 +135,19 @@ export default function Profile() {
     if (image) {
       const name = "profile-" + doc;
       saveFile("images/users/" + name, image, imageUploaded);
+    } else {
+      const result = await updateData("users", doc, {
+        ...form
+      });
+      if (result.status) {
+        setResult("success");
+        setEditing(false);
+      } else {
+        setResult("error");
+      }
     }
+
+    console.log(image);
 
     setLoading(false);
   };

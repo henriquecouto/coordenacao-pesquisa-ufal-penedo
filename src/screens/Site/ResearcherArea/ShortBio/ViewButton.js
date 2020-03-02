@@ -111,7 +111,11 @@ export default function ViewButton({ data, className }) {
           )
         ]}
       >
-        <section ref={contentToPrint} className="root">
+        <section
+          ref={contentToPrint}
+          className="root"
+          style={{ margin: "0 15px" }}
+        >
           <Divider className={classes.divider} />
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -156,7 +160,7 @@ export default function ViewButton({ data, className }) {
                 style={{ marginTop: 20 }}
               >
                 <a
-                  href={"https://orcid.org" + data.orcid}
+                  href={"https://orcid.org/" + data.orcid}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Grid container direction="column" alignItems="center">
@@ -171,7 +175,7 @@ export default function ViewButton({ data, className }) {
               </Grid>
               <Divider className={classes.divider} />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs>
               <Grid container direction="column">
                 <h2 align="center">BIOGRAFIA CURTA</h2>
                 <Divider className={classes.divider} />
