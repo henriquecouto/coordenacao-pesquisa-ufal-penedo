@@ -10,10 +10,6 @@ import {
 import { Launch } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.grey[300],
-    minHeight: window.innerHeight - 64
-  },
   header: {
     height: window.innerHeight - 400,
     maxWidth: 1000
