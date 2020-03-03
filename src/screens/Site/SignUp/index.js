@@ -67,16 +67,6 @@ export default function SignUp({ setLoading }) {
     course: ""
   });
   const [error, setError] = useState({ status: false, message: "" });
-  const [redirect, setRedirect] = useState({ status: false });
-
-  useEffect(() => {
-    const unsubscribe = listenLogin(setRedirect);
-    return () => unsubscribe();
-  }, []);
-
-  if (redirect.status) {
-    return <Redirect to="/" />;
-  }
 
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
@@ -91,7 +81,6 @@ export default function SignUp({ setLoading }) {
     setLoading(true);
     const result = await signUp({ ...form, type: "default" });
     if (result.status) {
-      setRedirect({ status: true });
     } else {
       setError({ status: true, message: result.error });
     }
