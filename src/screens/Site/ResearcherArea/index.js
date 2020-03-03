@@ -46,7 +46,7 @@ export default function ResearcherArea({ setPosition }) {
     return (
       <>
         <Route exact path={`${match.url}/register`}>
-          <SignUp setLoading={setLoading} />
+          <SignUp/>
         </Route>
         <Route exact path={`${match.url}/`}>
           <SignIn setLoading={setLoading} />

@@ -14,9 +14,11 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  CircularProgress
 } from "@material-ui/core";
 import { Link as Redirect, useHistory } from "react-router-dom";
+import CustomAlert from "../../../components/CustomAlert";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,10 +37,10 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
-  }
+  },
 }));
 
-export default function SignUp({ setLoading }) {
+export default function SignUp() {
   const specializationLabel = React.useRef(null);
   const courseLabel = React.useRef(null);
   const [labelsWidth, setLabelsWidth] = React.useState({
@@ -67,6 +69,20 @@ export default function SignUp({ setLoading }) {
     course: ""
   });
   const [error, setError] = useState({ status: false, message: "" });
+<<<<<<< HEAD
+  const [redirect, setRedirect] = useState({ status: false });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = listenLogin(setRedirect);
+    return () => unsubscribe();
+  }, []);
+
+  if (redirect.status) {
+    return <Redirect to="/" />;
+  }
+=======
+>>>>>>> master
 
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
@@ -76,18 +92,34 @@ export default function SignUp({ setLoading }) {
     setForm(old => ({ ...old, [name]: value }));
   };
 
+  const clearResult = () => setError({status:false});
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
     const result = await signUp({ ...form, type: "default" });
-    if (result.status) {
-    } else {
+    if (!result.status) {
       setError({ status: true, message: result.error });
     }
     setLoading(false);
   };
 
+  if(loading){
+    return (
+      <Grid container justify="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
   return (
+    <>
+      <CustomAlert
+        open={error.status}
+        handle={clearResult}
+        severity="error"
+        message={error.message}
+      />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -225,11 +257,6 @@ export default function SignUp({ setLoading }) {
             onChange={onChange}
             value={form.password}
           />
-          {error.status && (
-            <Typography variant="subtitle2" color="error">
-              Erro: {error.message}
-            </Typography>
-          )}
           <Button
             type="submit"
             fullWidth
@@ -240,7 +267,7 @@ export default function SignUp({ setLoading }) {
             Cadastrar
           </Button>
         </form>
-        <Grid container justify="flex-end">
+        <Grid container justify="flex-end" spacing={5}>
           <Grid item>
             <Link
               variant="body2"
@@ -253,5 +280,6 @@ export default function SignUp({ setLoading }) {
         </Grid>
       </div>
     </Container>
+    </>
   );
 }

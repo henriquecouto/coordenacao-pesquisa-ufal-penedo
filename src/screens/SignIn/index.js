@@ -11,8 +11,11 @@ import {
   TextField,
   Button,
   Grid,
-  Link
+  Link,
+  CircularProgress
 } from "@material-ui/core";
+import CustomAlert from "../../components/CustomAlert";
+
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,30 +37,47 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoading }) {
+export default function SignIn() {
   const match = useRouteMatch();
 
   const classes = useStyles();
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState({ status: false, message: "" });
+  const [loading, setLoading] = useState(false);
 
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
   };
 
+  const clearResult = () => setError({status:false});
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
     const result = await signIn(form.email, form.password);
-    if (result.status) {
-    } else {
+    if (!result.status) {
       setError({ status: true, message: result.error });
     }
     setLoading(false);
   };
 
+  if(loading){
+    return (
+      <Grid container justify="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
   return (
+    <>
+      <CustomAlert
+        open={error.status}
+        handle={clearResult}
+        severity="error"
+        message={error.message}
+      />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -94,13 +114,6 @@ export default function SignIn({ setLoading }) {
             onChange={onChange}
             value={form.password}
           />
-
-          {error.status && (
-            <Typography variant="subtitle2" color="error">
-              Erro: {error.message}
-            </Typography>
-          )}
-
           <Button
             type="submit"
             fullWidth
@@ -135,5 +148,6 @@ export default function SignIn({ setLoading }) {
         </Grid>
       </div>
     </Container>
+    </>
   );
 }
