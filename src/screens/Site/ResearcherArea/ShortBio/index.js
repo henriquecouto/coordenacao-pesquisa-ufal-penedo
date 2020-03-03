@@ -82,20 +82,10 @@ export default function ShortBio() {
 
   useEffect(() => {
     const unsubscribe = loadLoggedUser(
-      ({
-        fullName,
-        siape,
-        knowledgearea,
-        lattes,
-        specialization,
-        course,
-        photo,
-        email
-      }) => {
+      ({ fullName, siape, lattes, specialization, course, photo, email }) => {
         setFullData({
           fullName,
           siape,
-          knowledgearea,
           lattes,
           specialization,
           course,
