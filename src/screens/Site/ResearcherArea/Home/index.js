@@ -86,7 +86,7 @@ export default function Home() {
           <CustomCard variant="dark" className={classes.paperQuestionary}>
             <Typography variant="h4">Biografia do Pesquisador</Typography>
             <Typography variant="subtitle1">
-              Crie e imprima uma mini biografia sobre sua vida acadêmica.
+              Forneça informações sobre a sua carreira e interesses de pesquisa
             </Typography>
           </CustomCard>
         </Grid>
