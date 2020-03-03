@@ -65,7 +65,7 @@ export default function Home() {
           }
         >
           <Typography variant="h4">
-            Olá {getLoggedUser().displayName}, seja bem vindo(a)!
+            Olá, {getLoggedUser().displayName}, seja bem vindo(a)!
           </Typography>
           <Typography variant="subtitle1">
             Aqui você pode adicionar ou editar seus dados acadêmicos
