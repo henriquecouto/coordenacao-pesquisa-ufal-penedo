@@ -177,7 +177,7 @@ export default function ViewButton({ data, className }) {
             </Grid>
             <Grid item xs>
               <Grid container direction="column">
-                <h2 align="center">BIOGRAFIA CURTA</h2>
+                <h2 align="center">BIOGRAFIA</h2>
                 <Divider className={classes.divider} />
                 <h1>RESUMO</h1>
                 <span>{data.resume}</span>
@@ -185,9 +185,8 @@ export default function ViewButton({ data, className }) {
 
               <Grid container direction="column">
                 <Divider className={classes.divider} />
-                <h1>TITULAÇÃO</h1>
+                <h1>FORMAÇÃO ACADÊMICA</h1>
                 {/* <p align="justify">{data.specialization}</p> */}
-                <span>Área de Conhecimento: {data.knowledgearea}</span>
                 {data.education.map((v, i) => {
                   return <p key={i}>{v}</p>;
                 })}
