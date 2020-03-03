@@ -29,7 +29,7 @@ export default function ResearchGroups({ setPosition }) {
         <CustomCard>
           <Typography variant="h4">Grupos de Pesquisa</Typography>
           <Typography variant="subtitle1">
-            Aqui está a lista dos grupos de pesquisa da Unidade!
+              Grupos de Pesquisa da Unidade Certificados pelo CNPQ
           </Typography>
         </CustomCard>
       </Grid>

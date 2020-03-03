@@ -1,18 +1,7 @@
-import React, { createRef, useState, useEffect } from "react";
-import {
-  Button,
-  Grid,
-  Avatar,
-  Typography,
-  Divider,
-  Icon,
-  SvgIcon
-} from "@material-ui/core";
+import React, { createRef, useState } from "react";
+import { Button, Grid, Avatar, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Print as PrintIcon,
-  MailOutline as MailIcon
-} from "@material-ui/icons";
+import { Print as PrintIcon } from "@material-ui/icons";
 import { savePDF } from "@progress/kendo-react-pdf";
 import CustomModal from "../../../../components/CustomModal";
 import "./pdfStyles.css";
@@ -177,7 +166,7 @@ export default function ViewButton({ data, className }) {
             </Grid>
             <Grid item xs>
               <Grid container direction="column">
-                <h2 align="center">BIOGRAFIA CURTA</h2>
+                <h2 align="center">BIOGRAFIA</h2>
                 <Divider className={classes.divider} />
                 <h1>RESUMO</h1>
                 <span>{data.resume}</span>
@@ -185,9 +174,8 @@ export default function ViewButton({ data, className }) {
 
               <Grid container direction="column">
                 <Divider className={classes.divider} />
-                <h1>TITULAÇÃO</h1>
+                <h1>FORMAÇÃO ACADÊMICA</h1>
                 {/* <p align="justify">{data.specialization}</p> */}
-                <span>Área de Conhecimento: {data.knowledgearea}</span>
                 {data.education.map((v, i) => {
                   return <p key={i}>{v}</p>;
                 })}

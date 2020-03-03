@@ -30,7 +30,7 @@ export default function Pibic({ setPosition }) {
         <CustomCard>
           <Typography variant="h4">Eventos</Typography>
           <Typography variant="subtitle1">
-            Aqui está a lista dos eventos da Coordenação de Pesquisa!
+            Eventos organizados pela Coordenação de Pesquisa
           </Typography>
         </CustomCard>
       </Grid>

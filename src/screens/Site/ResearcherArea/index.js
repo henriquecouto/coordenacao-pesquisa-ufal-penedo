@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Route,
   useRouteMatch,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 import { listenLogin } from "../../../services/auth";
 import { Grid, CircularProgress } from "@material-ui/core";
@@ -14,6 +15,7 @@ import SignUp from "../SignUp";
 import Home from "./Home";
 import Profile from "./Profile";
 import ShortBio from "./ShortBio";
+import CustomAlert from "../../../components/CustomAlert";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
@@ -59,6 +61,9 @@ export default function ResearcherArea({ setPosition }) {
   if (logged.status) {
     return (
       <>
+        <Route exact path={`${match.url}/register`}>
+          <Redirect to={`${match.url}/`} />
+        </Route>
         <Route exact path={`${match.url}/`}>
           <Home />
         </Route>

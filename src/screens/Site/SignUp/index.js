@@ -69,6 +69,7 @@ export default function SignUp() {
     course: ""
   });
   const [error, setError] = useState({ status: false, message: "" });
+<<<<<<< HEAD
   const [redirect, setRedirect] = useState({ status: false });
   const [loading, setLoading] = useState(false);
 
@@ -80,6 +81,8 @@ export default function SignUp() {
   if (redirect.status) {
     return <Redirect to="/" />;
   }
+=======
+>>>>>>> master
 
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
