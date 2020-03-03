@@ -3,7 +3,7 @@ import { Typography, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { loadPibic } from "../../../services/db";
 import CustomCard from "../../../components/CustomCard";
-import {InputLabel, Select, MenuItem, FormControl} from '@material-ui/core';
+import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
-  },
+    minWidth: 120
+  }
 }));
 
 const limit = 5;
@@ -40,7 +40,13 @@ export default function Pibic({ setPosition }) {
   };
 
   useEffect(() => {
-    const unsubscribe = loadPibic(setProjects, limit, undefined, undefined, typeOrder);
+    const unsubscribe = loadPibic(
+      setProjects,
+      limit,
+      undefined,
+      undefined,
+      typeOrder
+    );
     return () => unsubscribe();
   }, [typeOrder]);
 
@@ -75,7 +81,7 @@ export default function Pibic({ setPosition }) {
   useEffect(() => {
     setPosition("Pibic");
   }, [setPosition]);
-  
+
   return (
     <>
       <Grid container className={classes.root} justify="center">
@@ -93,11 +99,13 @@ export default function Pibic({ setPosition }) {
       <Grid container direction="column" className={classes.root}>
         <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
         <Grid>
-          <FormControl className={classes.formControl}>
+          <FormControl className={classes.formControl} variant="outlined">
             <Select
               id="type-order"
               value={typeOrder}
-              onChange={(e) => {setTypeorder(e.target.value)}}
+              onChange={e => {
+                setTypeorder(e.target.value);
+              }}
             >
               <MenuItem value="period">Ciclo</MenuItem>
               <MenuItem value="title">Título</MenuItem>

@@ -1,18 +1,7 @@
-import React, { createRef, useState, useEffect } from "react";
-import {
-  Button,
-  Grid,
-  Avatar,
-  Typography,
-  Divider,
-  Icon,
-  SvgIcon
-} from "@material-ui/core";
+import React, { createRef, useState } from "react";
+import { Button, Grid, Avatar, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Print as PrintIcon,
-  MailOutline as MailIcon
-} from "@material-ui/icons";
+import { Print as PrintIcon } from "@material-ui/icons";
 import { savePDF } from "@progress/kendo-react-pdf";
 import CustomModal from "../../../../components/CustomModal";
 import "./pdfStyles.css";
