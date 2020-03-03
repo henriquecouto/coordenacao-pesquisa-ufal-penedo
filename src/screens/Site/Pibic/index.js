@@ -20,20 +20,28 @@ const limit = 5;
 export default function Pibic({ setPosition }) {
   const classes = useStyles();
   const [projects, setProjects] = useState([]);
-  const [typeOrder, setTypeorder] = useState("period");
+  const [typeOrder, setTypeorder] = useState("title");
+  const [order, setOrder] = useState(["title", "period", "leader"]);
   const [nextPage, setNextPage] = useState([]);
   const [previousPage, setPreviousPage] = useState([]);
 
+  const onChange = e => {
+    const orders = {
+      title: ["title", "period", "leader"],
+      period: ["period", "leader", "title"],
+      leader: ["leader", "title", "period"]
+    };
+    setTypeorder(e.target.value);
+    setOrder(orders[e.target.value]);
+  };
+
   const next = () => {
-    // setPreviousPage([projects[0]]);
-    // loadPibic(setProjects, limit, projects[projects.length - 1].title);
     window.scrollTo(0, 0);
     setProjects(nextPage);
     setNextPage([]);
   };
 
   const previous = () => {
-    // loadPibic(setProjects, limit, previousPage[0].title, false);
     window.scrollTo(0, 0);
     setProjects(previousPage.reverse());
     setPreviousPage([]);
@@ -43,12 +51,12 @@ export default function Pibic({ setPosition }) {
     const unsubscribe = loadPibic(
       setProjects,
       limit,
-      undefined,
-      undefined,
-      typeOrder
+      order[0],
+      order[1],
+      order[2]
     );
     return () => unsubscribe();
-  }, [typeOrder]);
+  }, [order]);
 
   useEffect(() => {
     // Next page exists?
@@ -56,13 +64,16 @@ export default function Pibic({ setPosition }) {
       const unsubscribe = loadPibic(
         setNextPage,
         limit,
-        projects[projects.length - 1].title,
-        undefined,
-        typeOrder
+        order[0],
+        order[1],
+        order[2],
+        projects[projects.length - 1][order[0]],
+        projects[projects.length - 1][order[1]],
+        projects[projects.length - 1][order[2]]
       );
       return () => unsubscribe();
     }
-  }, [projects, typeOrder]);
+  }, [projects, order]);
 
   useEffect(() => {
     // Previous page exists?
@@ -70,13 +81,18 @@ export default function Pibic({ setPosition }) {
       const unsubscribe = loadPibic(
         setPreviousPage,
         limit,
-        projects[0].title,
+        order[0],
+        order[1],
+        order[2],
+        projects[0][order[0]],
+        projects[0][order[1]],
+        projects[0][order[2]],
         true,
-        typeOrder
+        "desc"
       );
       return () => unsubscribe();
     }
-  }, [projects, typeOrder]);
+  }, [projects, order]);
 
   useEffect(() => {
     setPosition("Pibic");
@@ -100,13 +116,7 @@ export default function Pibic({ setPosition }) {
         <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
         <Grid>
           <FormControl className={classes.formControl} variant="outlined">
-            <Select
-              id="type-order"
-              value={typeOrder}
-              onChange={e => {
-                setTypeorder(e.target.value);
-              }}
-            >
+            <Select id="type-order" value={typeOrder} onChange={onChange}>
               <MenuItem value="period">Ciclo</MenuItem>
               <MenuItem value="title">Título</MenuItem>
               <MenuItem value="leader">Orientador</MenuItem>

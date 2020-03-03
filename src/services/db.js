@@ -152,23 +152,32 @@ export const loadEvents = callback => {
 export const loadPibic = (
   callback,
   limit = 5,
-  start = 0,
+  type1,
+  type2,
+  type3,
+  start1 = 0,
+  start2 = 0,
+  start3 = 0,
   after = true,
-  type = "period"
+  order = "asc"
 ) => {
   if (after) {
     const unsubscribe = db
       .collection("pibic")
-      .orderBy(type, "asc")
-      .startAfter(start)
+      .orderBy(type1, order)
+      .orderBy(type2, order)
+      .orderBy(type3, order)
+      .startAfter(start1, start2, start3)
       .limit(limit)
       .onSnapshot(snapshot => onSnapshot(snapshot, callback));
     return unsubscribe;
   } else {
     const unsubscribe = db
       .collection("pibic")
-      .orderBy(type, "asc")
-      .startAt(start)
+      .orderBy(type1, order)
+      .orderBy(type2, order)
+      .orderBy(type3, order)
+      .startAfter(start1, start2, start3)
       .limit(limit)
       .onSnapshot(snapshot => onSnapshot(snapshot, callback));
     return unsubscribe;
