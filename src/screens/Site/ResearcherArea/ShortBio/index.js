@@ -446,7 +446,6 @@ export default function ShortBio() {
                 >
                   Salvar
                 </Button>
-
                 <Button
                   color="primary"
                   className={classes.button}
