@@ -32,7 +32,7 @@ export const updateData = async (collection, doc, data) => {
 
 const onSnapshot = (snapshot, next, one = false) => {
   let result;
-  if (one) {
+  if (one && snapshot.docs[0]) {
     result = { ...snapshot.docs[0].data(), id: snapshot.docs[0].id };
   } else {
     result = snapshot.docs.map(v => ({ id: v.id, ...v.data() }));
