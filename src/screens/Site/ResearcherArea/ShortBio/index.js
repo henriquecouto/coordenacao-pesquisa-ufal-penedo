@@ -176,7 +176,7 @@ export default function ShortBio() {
           <Paper className={classes.paper} style={{ marginTop: 5 }}>
             <Grid container direction="column">
               <Grid item className={classes.paperHeader}>
-                <Typography variant="h6">ShortBio</Typography>
+                <Typography variant="h6">Biografia</Typography>
               </Grid>
               <Grid item className={classes.paperContent}>
                 <Grid container direction="column" spacing={0}>
@@ -372,7 +372,7 @@ export default function ShortBio() {
               <Grid item className={classes.paperContent}>
                 <Grid container direction="column" spacing={0}>
                   <Grid item>
-                    <Typography>Educação</Typography>
+                    <Typography>Formação Acadêmica</Typography>
                   </Grid>
                   <Grid item>
                     <Grid container direction="column">
@@ -426,7 +426,7 @@ export default function ShortBio() {
                             onChangeArray("new", null, "education", null)
                           }
                         >
-                          Adicionar publicação
+                          Adicionar Formação
                         </Button>
                       </Grid>
                     </Grid>
@@ -446,7 +446,6 @@ export default function ShortBio() {
                 >
                   Salvar
                 </Button>
-
                 <Button
                   color="primary"
                   className={classes.button}
