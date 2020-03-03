@@ -30,7 +30,7 @@ export default function Postgraduate({ setPosition }) {
         <CustomCard>
           <Typography variant="h4">Pós Graduação</Typography>
           <Typography variant="subtitle1">
-            Aqui está a lista dos programas de pós graduação da Unidade!
+              Programas de pós Graduação da Unidade
           </Typography>
         </CustomCard>
       </Grid>
