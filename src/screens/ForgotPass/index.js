@@ -11,8 +11,10 @@ import {
   TextField,
   Button,
   Grid,
-  Link
+  Link,
+  CircularProgress
 } from "@material-ui/core";
+import CustomAlert from "../../components/CustomAlert";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,40 +36,48 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ForgotPass({ setLoading }) {
+export default function ForgotPass() {
   const history = useHistory();
   const classes = useStyles();
 
   const [form, setForm] = useState({ email: "" });
-  const [error, setError] = useState({ status: false, message: "" });
-  const [redirect, setRedirect] = useState({ status: false });
-
-  useEffect(() => {
-    const unsubscribe = listenLogin(setRedirect);
-    return () => unsubscribe();
-  }, []);
-
-  if (redirect.status) {
-    return <Redirect to="/" />;
-  }
+  const [result, setResult] = useState({ status: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
   const onChange = ({ target: { id, value } }) => {
     setForm(old => ({ ...old, [id]: value }));
   };
 
+  const clearResult = () => setResult({ status: "" });
+
   const make = async e => {
     e.preventDefault();
     setLoading(true);
     const result = await recoverPass(form.email);
-    if (result.status) {
-      console.log("recuperação");
+    if (!result.status) {
+      setResult({ status: "error", message: result.error });
     } else {
-      setError({ status: true, message: result.error });
+      setResult({ status: "success", message: "Verifique seu email para recuperar sua senha (Lembre de verificar a caixa de spam)" });
     }
     setLoading(false);
   };
 
+  if (loading) {
+    return (
+      <Grid container justify="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
   return (
+    <>
+      <CustomAlert
+        open={result.status}
+        handle={clearResult}
+        severity={result.status}
+        message={result.message}
+      />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -91,15 +101,6 @@ export default function ForgotPass({ setLoading }) {
             onChange={onChange}
             value={form.email}
           />
-          {error.status && (
-            <Typography
-              variant="subtitle2"
-              color="error"
-              style={{ width: "100%" }}
-            >
-              Erro: {error.message}
-            </Typography>
-          )}
           <Button
             type="submit"
             fullWidth
@@ -124,5 +125,6 @@ export default function ForgotPass({ setLoading }) {
         </Grid>
       </div>
     </Container>
+    </>
   );
 }
