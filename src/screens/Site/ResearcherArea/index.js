@@ -15,7 +15,6 @@ import SignUp from "../SignUp";
 import Home from "./Home";
 import Profile from "./Profile";
 import ShortBio from "./ShortBio";
-import CustomAlert from "../../../components/CustomAlert";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
