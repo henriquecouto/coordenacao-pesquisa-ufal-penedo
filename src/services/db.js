@@ -154,12 +154,12 @@ export const loadPibic = (
   limit = 5,
   start = 0,
   after = true,
-  order = "asc"
+  type = "period"
 ) => {
   if (after) {
     const unsubscribe = db
       .collection("pibic")
-      .orderBy("title", order)
+      .orderBy(type, "asc")
       .startAfter(start)
       .limit(limit)
       .onSnapshot(snapshot => onSnapshot(snapshot, callback));
@@ -167,7 +167,7 @@ export const loadPibic = (
   } else {
     const unsubscribe = db
       .collection("pibic")
-      .orderBy("title", order)
+      .orderBy(type, "asc")
       .startAt(start)
       .limit(limit)
       .onSnapshot(snapshot => onSnapshot(snapshot, callback));
