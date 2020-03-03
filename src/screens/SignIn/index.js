@@ -16,7 +16,6 @@ import {
 } from "@material-ui/core";
 import CustomAlert from "../../components/CustomAlert";
 
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -39,7 +38,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const match = useRouteMatch();
-
   const classes = useStyles();
 
   const [form, setForm] = useState({ email: "", password: "" });
@@ -50,7 +48,7 @@ export default function SignIn() {
     setForm(old => ({ ...old, [id]: value }));
   };
 
-  const clearResult = () => setError({status:false});
+  const clearResult = () => setError({ status: false });
 
   const make = async e => {
     e.preventDefault();
@@ -62,7 +60,7 @@ export default function SignIn() {
     setLoading(false);
   };
 
-  if(loading){
+  if (loading) {
     return (
       <Grid container justify="center">
         <CircularProgress />
@@ -78,76 +76,76 @@ export default function SignIn() {
         severity="error"
         message={error.message}
       />
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar} variant="rounded">
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Entrar
-        </Typography>
-        <form onSubmit={make} className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={onChange}
-            value={form.email}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Senha"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={onChange}
-            value={form.password}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            // onClick={make}
-          >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar} variant="rounded">
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Entrar
-          </Button>
-        </form>
+          </Typography>
+          <form onSubmit={make} className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={onChange}
+              value={form.email}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Senha"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={onChange}
+              value={form.password}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              // onClick={make}
+            >
+              Entrar
+            </Button>
+          </form>
 
-        <Grid container>
-          <Grid item xs>
-            <Link
-              variant="body2"
-              component={RouterLink}
-              to={`${match.url}/forgot-password`}
-            >
-              Esqueceu a senha?
-            </Link>
+          <Grid container>
+            <Grid item xs>
+              <Link
+                variant="body2"
+                component={RouterLink}
+                to={`${match.url}/forgot-password`}
+              >
+                Esqueceu a senha?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link
+                variant="body2"
+                component={RouterLink}
+                to={`${match.url}/register`}
+              >
+                Não possui uma conta? Cadastre-se
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Link
-              variant="body2"
-              component={RouterLink}
-              to={`${match.url}/register`}
-            >
-              Não possui uma conta? Cadastre-se
-            </Link>
-          </Grid>
-        </Grid>
-      </div>
-    </Container>
+        </div>
+      </Container>
     </>
   );
 }
