@@ -3,18 +3,24 @@ import { Typography, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { loadPibic } from "../../../services/db";
 import CustomCard from "../../../components/CustomCard";
+import {InputLabel, Select, MenuItem, FormControl} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 900,
     padding: theme.spacing(2, 2, 2, 2)
-  }
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 const limit = 5;
 export default function Pibic({ setPosition }) {
   const classes = useStyles();
   const [projects, setProjects] = useState([]);
+  const [typeOrder, setTypeorder] = useState("period");
   const [nextPage, setNextPage] = useState([]);
   const [previousPage, setPreviousPage] = useState([]);
 
@@ -34,9 +40,9 @@ export default function Pibic({ setPosition }) {
   };
 
   useEffect(() => {
-    const unsubscribe = loadPibic(setProjects, limit);
+    const unsubscribe = loadPibic(setProjects, limit, undefined, undefined, typeOrder);
     return () => unsubscribe();
-  }, []);
+  }, [typeOrder]);
 
   useEffect(() => {
     // Next page exists?
@@ -44,11 +50,13 @@ export default function Pibic({ setPosition }) {
       const unsubscribe = loadPibic(
         setNextPage,
         limit,
-        projects[projects.length - 1].title
+        projects[projects.length - 1].title,
+        undefined,
+        typeOrder
       );
       return () => unsubscribe();
     }
-  }, [projects]);
+  }, [projects, typeOrder]);
 
   useEffect(() => {
     // Previous page exists?
@@ -58,27 +66,45 @@ export default function Pibic({ setPosition }) {
         limit,
         projects[0].title,
         true,
-        "desc"
+        typeOrder
       );
       return () => unsubscribe();
     }
-  }, [projects]);
+  }, [projects, typeOrder]);
 
   useEffect(() => {
     setPosition("Pibic");
   }, [setPosition]);
-
-  console.log({ previousPage, nextPage });
-
+  
   return (
     <>
       <Grid container className={classes.root} justify="center">
         <CustomCard>
-          <Typography variant="h4">Projetos PIBIC</Typography>
-          <Typography variant="subtitle1">
-            Aqui está a lista de Projetos PIBIC da Unidade!
-          </Typography>
+          <Grid container spacing={5}>
+            <Grid item>
+              <Typography variant="h4">Projetos PIBIC</Typography>
+              <Typography variant="subtitle1">
+                Aqui está a lista de Projetos PIBIC da Unidade!
+              </Typography>
+            </Grid>
+          </Grid>
         </CustomCard>
+      </Grid>
+      <Grid container direction="column" className={classes.root}>
+        <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
+        <Grid>
+          <FormControl className={classes.formControl}>
+            <Select
+              id="type-order"
+              value={typeOrder}
+              onChange={(e) => {setTypeorder(e.target.value)}}
+            >
+              <MenuItem value="period">Ciclo</MenuItem>
+              <MenuItem value="title">Título</MenuItem>
+              <MenuItem value="leader">Orientador</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
       <Grid container className={classes.root} justify="center">
         {projects.map(project => {
