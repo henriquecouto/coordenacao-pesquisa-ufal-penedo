@@ -56,7 +56,8 @@ export default function Profile() {
     knowledgearea: "",
     lattes: "",
     specialization: "",
-    course: ""
+    course: "",
+    photo: ""
   });
   const [image, setImage] = useState(null);
 
@@ -79,7 +80,7 @@ export default function Profile() {
         specialization,
         course,
         id,
-        photo
+        photo = ""
       }) => {
         setForm({
           fullName,
@@ -132,22 +133,21 @@ export default function Profile() {
       }
     };
 
+    console.log(form);
+
     if (image) {
       const name = "profile-" + doc;
       saveFile("images/users/" + name, image, imageUploaded);
     } else {
-      const result = await updateData("users", doc, {
-        ...form
-      });
+      const result = await updateData("users", doc, form);
       if (result.status) {
         setResult("success");
         setEditing(false);
       } else {
         setResult("error");
       }
+      console.log(result);
     }
-
-    console.log(image);
 
     setLoading(false);
   };
