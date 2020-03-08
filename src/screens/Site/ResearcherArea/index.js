@@ -6,8 +6,8 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import { listenLogin } from "../../../services/auth";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { listenLogin, signOut } from "../../../services/auth";
+import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import ForgotPass from "../../ForgotPass";
 import Questionary from "./Questionary";
 import SignIn from "../../SignIn";
@@ -15,6 +15,7 @@ import SignUp from "../SignUp";
 import Home from "./Home";
 import Profile from "./Profile";
 import ShortBio from "./ShortBio";
+import { getLastUse, saveLastUse } from "../../../helpers/login";
 
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
@@ -28,10 +29,21 @@ export default function ResearcherArea({ setPosition }) {
   };
 
   useEffect(() => {
+    const unsubscribe = listenLogin(handleLogged);
     setLoading(true);
-    listenLogin(handleLogged);
     setPosition("ResearcherArea");
+    return () => unsubscribe();
   }, [setPosition]);
+
+  useEffect(() => {
+    const lastUse = getLastUse();
+    const actualUse = new Date();
+    if (actualUse - lastUse > 30 * 60000) {
+      signOut();
+    } else {
+      saveLastUse();
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -47,11 +59,17 @@ export default function ResearcherArea({ setPosition }) {
         <Route exact path={`${match.url}/register`}>
           <SignUp />
         </Route>
-        <Route exact path={`${match.url}/`}>
-          <SignIn setLoading={setLoading} />
-        </Route>
         <Route exact path={`${match.url}/forgot-password`}>
-          <ForgotPass setLoading={setLoading} />
+          <ForgotPass />
+        </Route>
+        <Route exact path={`${match.url}`}>
+          <SignIn />
+        </Route>
+        <Route path={`${match.url}/*`} exact>
+          <Typography variant="h6">
+            Está página não está acessível ou não existe
+          </Typography>
+          <Link to={`${match.url}`}>Fazer login</Link>
         </Route>
       </>
     );
@@ -63,7 +81,7 @@ export default function ResearcherArea({ setPosition }) {
         <Route exact path={`${match.url}/register`}>
           <Redirect to={`${match.url}`} />
         </Route>
-        <Route exact path={`${match.url}/`}>
+        <Route exact path={`${match.url}`}>
           <Home />
         </Route>
         <Route exact path={`${match.url}/questionary/:questionaryId`}>

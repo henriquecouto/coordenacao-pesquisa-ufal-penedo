@@ -1,5 +1,6 @@
 import { auth } from "./firebase";
 import { addData } from "./db";
+import { saveLastUse } from "../helpers/login";
 
 const errors = {
   "auth/user-not-found": "Não há nenhum usuário registrado com esse email.",
@@ -18,6 +19,7 @@ export const signUp = async ({ email, password, fullName, ...others }) => {
       displayName: fullName
     });
     await addData("users", { email, fullName, ...others });
+    saveLastUse();
     return { status: true };
   } catch (error) {
     console.log(error.code, error.message);
@@ -28,6 +30,7 @@ export const signUp = async ({ email, password, fullName, ...others }) => {
 export const signIn = async (email, password) => {
   try {
     await auth.signInWithEmailAndPassword(email, password);
+    saveLastUse();
     return { status: true };
   } catch (error) {
     return { status: false, error: errors[error.code] };
