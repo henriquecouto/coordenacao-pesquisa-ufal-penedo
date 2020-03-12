@@ -17,6 +17,8 @@ import Profile from "./Profile";
 import ShortBio from "./ShortBio";
 import { getLastUse, saveLastUse } from "../../../helpers/login";
 
+const { pathname } = window.location;
+
 export default function ResearcherArea({ setPosition }) {
   const match = useRouteMatch();
 
@@ -65,12 +67,15 @@ export default function ResearcherArea({ setPosition }) {
         <Route exact path={`${match.url}`}>
           <SignIn />
         </Route>
-        <Route path={`${match.url}/*`} exact>
-          <Typography variant="h6">
-            Está página não está acessível ou não existe
-          </Typography>
-          <Link to={`${match.url}`}>Fazer login</Link>
-        </Route>
+        {pathname !== "/site/area-do-pesquisador/register" &&
+          pathname !== "/site/area-do-pesquisador/forgot-password" && (
+            <Route path={`${match.url}/*`} exact>
+              <Typography variant="h6">
+                Está página não está acessível ou não existe
+              </Typography>
+              <Link to={`${match.url}`}>Fazer login</Link>
+            </Route>
+          )}
       </>
     );
   }
