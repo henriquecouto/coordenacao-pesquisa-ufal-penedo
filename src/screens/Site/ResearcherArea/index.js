@@ -68,7 +68,8 @@ export default function ResearcherArea({ setPosition }) {
           <SignIn />
         </Route>
         {pathname !== "/site/area-do-pesquisador/register" &&
-          pathname !== "/site/area-do-pesquisador/forgot-password" && (
+          pathname !== "/site/area-do-pesquisador/forgot-password" &&
+          pathname !== "/site/area-do-pesquisador" && (
             <Route path={`${match.url}/*`} exact>
               <Typography variant="h6">
                 Está página não está acessível ou não existe
