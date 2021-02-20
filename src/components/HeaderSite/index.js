@@ -12,10 +12,11 @@ import {
   Hidden,
   SwipeableDrawer,
   ListItemIcon,
-  Button
+  Button,
+  Link as MuiLink
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Menu as MenuIcon } from "@material-ui/icons";
+import { LocalLibrary, Menu as MenuIcon } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 const drawerWidth = 250;
@@ -89,6 +90,16 @@ export default function Header({ children, position, routes }) {
           </ListItem>
         );
       })}
+      <ListItem
+        button
+        component={MuiLink}
+        target='_blank'
+        href='https://coord-pesquisa-ufal.web.app/'
+        onClick={toggleDrawer}
+      >
+        <ListItemIcon><LocalLibrary/></ListItemIcon>
+        <ListItemText primary='Portal do Pesquisador' />
+      </ListItem>
     </List>
   );
 
@@ -109,6 +120,15 @@ export default function Header({ children, position, routes }) {
             </Grid>
           );
         })}
+        <Grid item >
+          <Button
+            component={MuiLink}
+            target='_blank'
+            href='https://coord-pesquisa-ufal.web.app/'
+          >
+            Portal do Pesquisador
+          </Button>
+        </Grid>
     </Grid>
   );
 

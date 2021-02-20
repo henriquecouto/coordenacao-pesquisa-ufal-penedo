@@ -47,13 +47,13 @@ const routes = baseUrl => ({
     name: "Eventos",
     icon: <EventIcon />
   },
-  ResearcherArea: {
-    render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
-    path: baseUrl + "/area-do-pesquisador",
-    name: "Área do Pesquisador",
-    icon: <ResearcherAreaIcon />,
-    notExact: true
-  }
+  // ResearcherArea: {
+  //   render: handlePosition => <ResearcherArea setPosition={handlePosition} />,
+  //   path: baseUrl + "/area-do-pesquisador",
+  //   name: "Área do Pesquisador",
+  //   icon: <ResearcherAreaIcon />,
+  //   notExact: true
+  // }
 });
 
 export default function Site() {
